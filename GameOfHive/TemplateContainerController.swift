@@ -12,6 +12,17 @@ class TemplateContainerController: UIViewController {
     @IBOutlet weak var leftOffsetConstraint: NSLayoutConstraint!
 
     weak var templateDelegate: TemplatePickerDelegate?
+    var leftOffset: CGFloat = 120
+    
+    override func prefersStatusBarHidden() -> Bool {
+        return true
+    }
+
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+
+        leftOffsetConstraint.constant = leftOffset + 60
+    }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         guard let destination = segue.destinationViewController as? TemplateViewController where segue.identifier == "embedTemplates" else {
