@@ -12,7 +12,7 @@ import XCTest
 
 class GridTests: XCTestCase {
     func testGridLocation() {
-        let grid = HexagonGrid(rows: 10, columns: 10, initialGridType: .Random)
+        let grid = HexagonGrid(rows: 10, columns: 10, initialGridType: .random)
         let hex: Hexagon! = grid.hexagon(atLocation: Coordinate(row: 4, column: 5))
         XCTAssert(hex != nil, "Hexagon should not be nil")
         XCTAssertEqual(hex.location,Coordinate(row: 4, column: 5))
@@ -20,7 +20,7 @@ class GridTests: XCTestCase {
     
     func testPerformRules() {
         let rules = Rules.defaultRules
-        var grid = HexagonGrid(rows: 5, columns: 5, initialGridType: .Empty)
+        var grid = HexagonGrid(rows: 5, columns: 5, initialGridType: .empty)
         grid = grid.setActive(true, atLocation: Coordinate(row: 1, column: 2))
         grid = grid.setActive(true, atLocation: Coordinate(row: 3, column: 2))
         grid = rules.perform(grid)
@@ -29,7 +29,7 @@ class GridTests: XCTestCase {
         XCTAssertTrue(hex1!.active, "Hex 1 should be active")
         XCTAssertTrue(hex2!.active, "Hex 2 should be active")
 
-        grid = HexagonGrid(rows: 5, columns: 5, initialGridType: .Empty)
+        grid = HexagonGrid(rows: 5, columns: 5, initialGridType: .empty)
         grid = grid.setActive(true, atLocation: Coordinate(row: 2, column: 3))
         grid = grid.setActive(true, atLocation: Coordinate(row: 4, column: 3))
         grid = rules.perform(grid)

@@ -11,10 +11,10 @@ import Foundation
 ///Class to convert NSDate instances to and from a ISO8601 formatted string
 public struct ISO8601 {
     ///A singleton NSDateformatter initialized with the ISO8601 `dateFormat`
-    static var dateFormatter : NSDateFormatter {
+    static var dateFormatter : DateFormatter {
         struct Singleton {
-            static let instance : NSDateFormatter = {
-                let dateFormatter = NSDateFormatter()
+            static let instance : DateFormatter = {
+                let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ssXX"
                 return dateFormatter
             }()
@@ -28,8 +28,8 @@ public struct ISO8601 {
      - parameter string: A ISO8601 formatted `String`
      - returns: The date associated with the provided string, or nil if the string doesn't conform to the correct format.
      */
-    public static func parse(string: String) -> NSDate? {
-        return dateFormatter.dateFromString(string)
+    public static func parse(_ string: String) -> Date? {
+        return dateFormatter.date(from: string)
     }
     
     /**
@@ -38,7 +38,7 @@ public struct ISO8601 {
      - parameter date: An NSDate object to format
      - returns: The represented date as an ISO8601 formatted `String`
      */
-    public static func format(date: NSDate) -> String? {
-        return dateFormatter.stringFromDate(date)
+    public static func format(_ date: Date) -> String? {
+        return dateFormatter.string(from: date)
     }
 }

@@ -39,7 +39,7 @@ public struct Hexagon {
         self.init(location: Coordinate(row: row, column: column),active: active)
     }
     
-    public func setActive(active: Bool) -> Hexagon {
+    public func setActive(_ active: Bool) -> Hexagon {
         return Hexagon(row: location.row, column: location.column, active: active)
     }
 }
@@ -51,7 +51,7 @@ extension Hexagon: CustomStringConvertible {
 }
 
 
-public func neighboringLocations(location: Coordinate) -> [Coordinate] {
+public func neighboringLocations(_ location: Coordinate) -> [Coordinate] {
     let evenRow = location.row & 1 == 0
     let baseAdjustment = evenRow ? -1 : 0
     let leftColumn = location.column + baseAdjustment

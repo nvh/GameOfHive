@@ -9,8 +9,8 @@
 import UIKit
 
 enum MenuPressedState {
-  case Show
-  case Hide
+  case show
+  case hide
 }
 
 protocol MenuDelegate: class {
@@ -19,8 +19,8 @@ protocol MenuDelegate: class {
 }
 
 enum Content {
-    case Webpage(NSURL)
-    case TemplatePicker
+    case webpage(URL)
+    case templatePicker
 }
 
 struct MenuItemModel {
@@ -34,32 +34,32 @@ class MenuController: UIViewController {
     
     weak var delegate: MenuDelegate?
 
-    private let buttonModels = [
+    fileprivate let buttonModels = [
         MenuItemModel(
             title: "About",
-            content: .Webpage(NSURL(string: "https://tomasharkema.github.io/GameOfHive/about.html")!)),
+            content: .webpage(URL(string: "https://tomasharkema.github.io/GameOfHive/about.html"))),
         MenuItemModel(
             title: "Credits",
-            content: .Webpage(NSURL(string: "https://tomasharkema.github.io/GameOfHive/credits.html")!)),
+            content: .webpage(URL(string: "https://tomasharkema.github.io/GameOfHive/credits.html"))),
         MenuItemModel(
             title: "Templates",
-            content: .TemplatePicker),
+            content: .templatePicker),
         MenuItemModel(
             title: "Saved Hives",
-            content: .Webpage(NSURL(string: "https://tomasharkema.github.io/GameOfHive/")!)),
+            content: .webpage(URL(string: "https://tomasharkema.github.io/GameOfHive/"))),
         MenuItemModel(
             title: "Donate",
-            content: .Webpage(NSURL(string: "https://tomasharkema.github.io/GameOfHive/donate.html")!)),
+            content: .webpage(URL(string: "https://tomasharkema.github.io/GameOfHive/donate.html"))),
         MenuItemModel(
             title: "Video",
-            content: .Webpage(NSURL(string: "https://tomasharkema.github.io/GameOfHive/video.html")!))]
+            content: .webpage(URL(string: "https://tomasharkema.github.io/GameOfHive/video.html")!)),]
 
 
-    private var buttons = [HiveButton]()
-    private var openedHive: HiveButton?
-    private var height: CGFloat = 200
+    fileprivate var buttons = [HiveButton]()
+    fileprivate var openedHive: HiveButton?
+    fileprivate var height: CGFloat = 200
 
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
         // because, you know, constraints...
@@ -69,12 +69,12 @@ class MenuController: UIViewController {
         animateIn()
     }
 
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden : Bool {
         return true
     }
 
-    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-        return [.LandscapeLeft,.LandscapeRight]
+    override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
+        return [.landscapeLeft,.landscapeRight]
     }
 
     let offset: CGFloat = 4
@@ -87,22 +87,22 @@ class MenuController: UIViewController {
     }
 
     var degrees: CGFloat {
-        return atan(initialPoint.x / initialPoint.y) * (180 / CGFloat(M_PI))
+        return atan(initialPoint.x / initialPoint.y) * (180 / .pi)
     }
 
     var distance: CGFloat {
         return sqrt(pow(initialPoint.x, 2) + pow(initialPoint.y, 2))
     }
 
-    func pointForDegrees(offset: CGFloat, degrees: CGFloat) -> CGPoint {
-        let xOff = offset * cos(degrees * (CGFloat(M_PI) / 180))
-        let yOff = offset * sin(degrees * (CGFloat(M_PI) / 180))
+    func pointForDegrees(_ offset: CGFloat, degrees: CGFloat) -> CGPoint {
+        let xOff = offset * cos(degrees * (.pi / 180))
+        let yOff = offset * sin(degrees * (.pi / 180))
         return CGPoint(x: round(xOff), y: round(yOff))
     }
 
     func addButtons() {
 
-        let buttonsAndCoordinates: [(MenuItemModel, CGPoint)] = buttonModels.enumerate().map { (idx, el) in
+        let buttonsAndCoordinates: [(MenuItemModel, CGPoint)] = buttonModels.enumerated().map { (idx, el) in
             let offsetDegrees = (CGFloat(idx - 90) * 60.0) + degrees
             let point = pointForDegrees(distance, degrees: offsetDegrees - 90)
             return (el, point)
@@ -112,13 +112,13 @@ class MenuController: UIViewController {
             let center = CGPoint(x: point.x + (self.view.frame.width / 2), y: point.y + (self.view.frame.height / 2))
             let rect = CGRect(x: center.x, y: center.y, width: hexagonWidthForHeight(height/2), height: height/2)
 
-            let button = HiveButton(type: .Custom)
-            button.style = .Small
+            let button = HiveButton(type: .custom)
+            button.style = .small
             button.frame = rect
-            button.setTitle(model.title, forState: .Normal)
-            button.titleLabel?.textColor = UIColor.blackColor()
+            button.setTitle(model.title, for: UIControlState())
+            button.titleLabel?.textColor = UIColor.black
             button.center = center
-            button.addTarget(self, action: #selector(buttonPressed), forControlEvents: .TouchUpInside)
+            button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
             return button
         }
 
@@ -129,43 +129,43 @@ class MenuController: UIViewController {
         self.buttons = buttons
     }
 
-    private func animateMenuState(pressedState: MenuPressedState, completion: (Bool -> ())? = nil) {
+    fileprivate func animateMenuState(_ pressedState: MenuPressedState, completion: ((Bool) -> ())? = nil) {
         switch pressedState {
-        case .Show:
-            self.view.backgroundColor = UIColor.backgroundColor.colorWithAlphaComponent(0)
-            centerButton.transform = CGAffineTransformScale(CGAffineTransformMakeRotation(CGFloat(M_PI / 2)), CGFloat.min, CGFloat.min)
-            self.buttons.enumerate().forEach { (idx, button) in
+        case .show:
+            self.view.backgroundColor = UIColor.backgroundColor.withAlphaComponent(0)
+            centerButton.transform = CGAffineTransform(rotationAngle: .pi / 2).scaledBy(x: CGFloat.leastNormalMagnitude, y: CGFloat.leastNormalMagnitude)
+            self.buttons.enumerated().forEach { (idx, button) in
 
                 let tx = self.view.center.x - button.center.x
                 let ty = self.view.center.y - button.center.y
 
-                let rotation = CGAffineTransformMakeRotation(CGFloat(M_PI / 2))
-                let translate = CGAffineTransformMakeTranslation(tx, ty)
-                let transform = CGAffineTransformConcat(rotation, translate)
+                let rotation = CGAffineTransform(rotationAngle: .pi / 2)
+                let translate = CGAffineTransform(translationX: tx, y: ty)
+                let transform = rotation.concatenating(translate)
                 button.transform = transform
             }
-        case .Hide:
-            centerButton.transform = CGAffineTransformIdentity
-            self.buttons.forEach { $0.transform = CGAffineTransformIdentity }
+        case .hide:
+            centerButton.transform = CGAffineTransform.identity
+            self.buttons.forEach { $0.transform = CGAffineTransform.identity }
         }
 
         let animations = {
             switch pressedState {
-            case .Show:
-                self.centerButton.transform = CGAffineTransformIdentity
-                self.buttons.forEach { $0.transform = CGAffineTransformIdentity }
+            case .show:
+                self.centerButton.transform = CGAffineTransform.identity
+                self.buttons.forEach { $0.transform = CGAffineTransform.identity }
 
-            case .Hide:
-                self.centerButton.transform = CGAffineTransformScale(CGAffineTransformMakeRotation(CGFloat(M_PI / 2)), 0.01, 0.01)
-                self.buttons.enumerate().forEach { (idx, button) in
+            case .hide:
+                self.centerButton.transform = CGAffineTransform(rotationAngle: .pi / 2).scaledBy(x: 0.01, y: 0.01)
+                self.buttons.enumerated().forEach { (idx, button) in
 
                     let tx = self.view.center.x - button.center.x
                     let ty = self.view.center.y - button.center.y
 
-                    let rotation = CGAffineTransformMakeRotation(CGFloat(M_PI / 2))
-                    let translate = CGAffineTransformMakeTranslation(tx, ty)
-                    let transform = CGAffineTransformConcat(rotation, translate)
-                    let scale = CGAffineTransformConcat(CGAffineTransformMakeScale(0.0001, 0.0001), transform)
+                    let rotation = CGAffineTransform(rotationAngle: .pi / 2)
+                    let translate = CGAffineTransform(translationX: tx, y: ty)
+                    let transform = rotation.concatenating(translate)
+                    let scale = CGAffineTransform(scaleX: 0.0001, y: 0.0001).concatenating(transform)
                     button.transform = scale
                 }
             }
@@ -174,35 +174,35 @@ class MenuController: UIViewController {
         }
         
         switch pressedState {
-        case .Show:
-            UIView.animateWithDuration(1.0, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.6, options: .CurveEaseIn, animations: animations, completion: completion)
+        case .show:
+            UIView.animate(withDuration: 1.0, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.6, options: .curveEaseIn, animations: animations, completion: completion)
 
-        case .Hide:
-            UIView.animateWithDuration(0.4, delay: 0, options: .CurveEaseIn, animations: animations, completion: completion)
+        case .hide:
+            UIView.animate(withDuration: 0.4, delay: 0, options: .curveEaseIn, animations: animations, completion: completion)
         }
 
 
-        UIView.animateWithDuration(0.4) {
+        UIView.animate(withDuration: 0.4, animations: {
             self.view.backgroundColor = UIColor.backgroundColor
-                .colorWithAlphaComponent(pressedState == MenuPressedState.Show ? 0.75 : 0)
-        }
+                .withAlphaComponent(pressedState == MenuPressedState.show ? 0.75 : 0)
+        }) 
     }
     
     func animateIn() {
-        animateMenuState(.Show)
+        animateMenuState(.show)
     }
     
     func animateOut() {
-        animateMenuState(.Hide) { completed in
+        animateMenuState(.hide) { completed in
             if completed {
-                self.dismissViewControllerAnimated(false, completion: nil)
-                self.delegate?.menuDidClose(self)
+                self.dismiss(animated: false, completion: nil)
+                self.delegate?.menuDidClose(menu: self)
             }
         }
     }
     
     var isDismissing = false
-    @IBAction func dismissButtonPressed(sender: AnyObject) {
+    @IBAction func dismissButtonPressed(_ sender: AnyObject) {
         guard !isDismissing else {
             return
         }
@@ -221,15 +221,15 @@ protocol SubMenuDelegate: class {
 
 extension MenuController: SubMenuDelegate {
     func contentWillClose(openedViewController: UIViewController) {
-        UIView.animateWithDuration(0.3, delay: 0, options: [.CurveEaseOut], animations: {
-            self.openedHive?.transform = CGAffineTransformIdentity
+        UIView.animate(withDuration: 0.3, delay: 0, options: [.curveEaseOut], animations: {
+            self.openedHive?.transform = .identity
             }, completion: nil)
     }
 }
 
 extension MenuController: TemplatePickerDelegate {
     func didSelectTemplate(template: Template) {
-        delegate?.loadTemplate(template)
+        delegate?.loadTemplate(template: template)
         animateOut()
     }
 }
@@ -243,43 +243,43 @@ extension MenuController {
         let ty = endY - hiveButton.center.y
         let _: Double = sqrt(pow(Double(tx), 2) + pow(Double(ty), 2))
 
-        UIView.animateWithDuration(0.3, delay: 0, options: [.CurveEaseOut], animations: {
-            hiveButton.transform = CGAffineTransformMakeTranslation(tx, ty)
+        UIView.animate(withDuration: 0.3, delay: 0, options: [.curveEaseOut], animations: {
+            hiveButton.transform = CGAffineTransform(translationX: tx, y: ty)
         }, completion: completion)
     }
 
-    func buttonPressed(hiveButton: HiveButton) {
+    @objc func buttonPressed(_ hiveButton: HiveButton) {
         openedHive = hiveButton
 
-        guard let item = buttonModels.filter({ $0.title == hiveButton.titleForState(.Normal) }).first else {
+        guard let item = buttonModels.filter({ $0.title == hiveButton.title(for: UIControlState()) }).first else {
             return
         }
 
         switch item.content {
         case .Webpage:
-            performSegueWithIdentifier("presentContentController", sender: self)
-            animateButtonToControllerPoint(hiveButton) { _ in }
+            performSegue(withIdentifier: "presentContentController", sender: self)
+            animateButtonToControllerPoint(hiveButton: hiveButton) { _ in }
         case .TemplatePicker:
-            performSegueWithIdentifier("openTemplatePicker", sender: self)
-            animateButtonToControllerPoint(hiveButton) { _ in }
+            performSegue(withIdentifier: "openTemplatePicker", sender: self)
+            animateButtonToControllerPoint(hiveButton: hiveButton) { _ in }
         }
     }
 
-  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+  override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?) {
     guard let item = buttonModels.filter({ $0.title == self.openedHive?.titleForState(.Normal) }).first else {
         return
     }
 
     switch item.content {
     case let .Webpage(url):
-        guard let destination = segue.destinationViewController as? ContentViewController where segue.identifier == "presentContentController" else {
+        guard let destination = segue.destination as? ContentViewController, segue.identifier == "presentContentController" else {
             return
         }
         destination.leftOffset = hexagonWidthForHeight(height/2)
         destination.webView.loadRequest(NSURLRequest(URL: url))
         destination.delegate = self
     case .TemplatePicker:
-        guard let destination = segue.destinationViewController as? TemplateContainerController where segue.identifier == "openTemplatePicker" else {
+        guard let destination = segue.destination as? TemplateContainerController, segue.identifier == "openTemplatePicker" else {
             return
         }
         destination.templateDelegate = self

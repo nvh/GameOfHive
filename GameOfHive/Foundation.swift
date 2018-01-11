@@ -9,11 +9,11 @@
 import Foundation
 
 let documentsDirectory: NSString = {
-    let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+    let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
     let documentsDirectory = paths[0]
-    return documentsDirectory
+    return documentsDirectory as NSString
 }()
 
-let templateDirectory: NSString = documentsDirectory.stringByAppendingPathComponent("template")
-let jsonDirectory: NSString = templateDirectory.stringByAppendingPathComponent("json")
-let imageDirectory: NSString = templateDirectory.stringByAppendingPathComponent("images")
+let templateDirectory: NSString = documentsDirectory.appendingPathComponent("template") as NSString
+let jsonDirectory: NSString = templateDirectory.appendingPathComponent("json") as NSString
+let imageDirectory: NSString = templateDirectory.appendingPathComponent("images") as NSString

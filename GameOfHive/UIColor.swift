@@ -23,6 +23,6 @@ extension UIColor {
     }
     
     static var menuButtonBackgroundColor: UIColor {
-        return UIColor.blackColor().colorWithAlphaComponent(0.7)
+        return UIColor.black.withAlphaComponent(0.7)
     }
 }

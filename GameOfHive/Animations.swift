@@ -9,12 +9,12 @@
 import UIKit
 
 private protocol AnimationDelegate: class {
-    func animationDidFinish(animation: Animation)
+    func animationDidFinish(_ animation: Animation)
 }
 
 enum AnimationState {
-    case Ready
-    case Animating(identifier: AnimationIdentifier)
+    case ready
+    case animating(identifier: AnimationIdentifier)
 }
 
 struct AnimationConfiguration {
@@ -30,11 +30,11 @@ struct AnimationConfiguration {
 
 typealias AnimationIdentifier = UInt
 
-private let accessorQueue = dispatch_queue_create("animation_accessor_queue", DISPATCH_QUEUE_SERIAL)
+private let accessorQueue = DispatchQueue(label: "animation_accessor_queue", attributes: [])
 private var __identifier : AnimationIdentifier = 0
 private func nextIdentifier()-> AnimationIdentifier {
     var identifier: AnimationIdentifier!
-    dispatch_sync(accessorQueue) {
+    accessorQueue.sync {
         identifier = (__identifier % AnimationIdentifier.max) + 1
         __identifier = identifier
     }
@@ -66,18 +66,18 @@ private class Animation {
         self.endTime = configuration.duration
         
         // set state to animating
-        views.forEach { $0.animationState = .Animating(identifier: self.identifier) }
+        views.forEach { $0.animationState = .animating(identifier: self.identifier) }
     }
     
-    func removeView(view: HexagonView) {
-        view.animationState = .Ready
+    func removeView(_ view: HexagonView) {
+        view.animationState = .ready
         views.remove(view)
         if views.count == 0 {
             delegate?.animationDidFinish(self)
         }
     }
     
-    func increaseTime(increment: CFTimeInterval) {
+    func increaseTime(_ increment: CFTimeInterval) {
         currentTime += increment
         
         // clip to endtime
@@ -100,7 +100,7 @@ private class Animation {
         // finish if end time is reached
         if currentTime >= endTime {
             // reset animation state to Ready
-            views.forEach { $0.animationState = .Ready }
+            views.forEach { $0.animationState = .ready }
             // inform delegate
             delegate?.animationDidFinish(self)
         }
@@ -115,25 +115,25 @@ private final class FadeAnimation: Animation {
 
 // MARK: Animator
 class Animator {
-    private static let animator = Animator()
-    private var displayLink: CADisplayLink!
-    private var animations: [AnimationIdentifier : Animation] = [:]
-    private var lastDrawTime: CFTimeInterval = 0
+    fileprivate static let animator = Animator()
+    fileprivate var displayLink: CADisplayLink!
+    fileprivate var animations: [AnimationIdentifier : Animation] = [:]
+    fileprivate var lastDrawTime: CFTimeInterval = 0
     
     init () {
-        displayLink = UIScreen.mainScreen().displayLinkWithTarget(self, selector: #selector(tick))
-        displayLink.addToRunLoop(NSRunLoop.mainRunLoop(), forMode: NSDefaultRunLoopMode)
+        displayLink = UIScreen.main.displayLink(withTarget: self, selector: #selector(tick))
+        displayLink.add(to: RunLoop.main, forMode: RunLoopMode.defaultRunLoopMode)
     }
     
     // MARK: Add
-    static func addAnimationForViews(views: [HexagonView], configuration: AnimationConfiguration) {
+    static func addAnimationForViews(_ views: [HexagonView], configuration: AnimationConfiguration) {
         // collect views ready for animation
         var ready: [HexagonView] = []
         views.forEach { view in
             switch view.animationState {
-            case .Ready:
+            case .ready:
                 ready.append(view)
-            case .Animating(let identifier):
+            case .animating(let identifier):
                 // pick up from current animation value when already .Animating. creates separate animations per view
                 if let existingAnimation = animator.animations[identifier] {
                     // remove view from old animation
@@ -145,7 +145,7 @@ class Animator {
                 }
                 else {
                     assertionFailure("Should not occur")
-                    view.animationState = .Ready
+                    view.animationState = .ready
                     ready.append(view)
                 }
             }
@@ -157,13 +157,13 @@ class Animator {
         }
     }
     
-    private func addAnimation(animation: Animation) {
+    fileprivate func addAnimation(_ animation: Animation) {
         animation.delegate = self
         animations[animation.identifier] = animation
     }
     
     // MARK: Display link
-    @objc func tick(displayLink: CADisplayLink) {
+    @objc func tick(_ displayLink: CADisplayLink) {
         if lastDrawTime == 0 {
             lastDrawTime = displayLink.timestamp
         }
@@ -179,7 +179,7 @@ class Animator {
 
 // MARK: AnimationDelegate
 extension Animator: AnimationDelegate {
-    private func animationDidFinish(animation: Animation) {
+    fileprivate func animationDidFinish(_ animation: Animation) {
         animations[animation.identifier] = nil
     }
 }

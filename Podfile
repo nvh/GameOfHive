@@ -4,7 +4,7 @@
 use_frameworks!
 
 target 'GameOfHive' do
-  pod 'Argo'
+  # pod 'Argo'
 end
 
 target 'GameOfHiveTests' do

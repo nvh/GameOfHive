@@ -12,7 +12,7 @@ import WebKit
 
 class ContentViewController: UIViewController {
     @IBOutlet weak var webViewContainer: UIView!
-    @IBOutlet private weak var leftOffsetConstraint: NSLayoutConstraint!
+    @IBOutlet fileprivate weak var leftOffsetConstraint: NSLayoutConstraint!
     var leftOffset: CGFloat = 120
 
     let webView = WKWebView()
@@ -22,38 +22,38 @@ class ContentViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        webView.backgroundColor = UIColor.whiteColor()
+        webView.backgroundColor = .white
         webView.scrollView.backgroundColor = UIColor.backgroundColor
-        webView.opaque = false
+        webView.isOpaque = false
         webViewContainer.addSubview(webView)
         webView.constrainToView(webViewContainer, margin: 0)
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
         leftOffsetConstraint.constant = leftOffset + 60
 
         webViewContainer.alpha = 0
 
-        UIView.animateWithDuration(0.3) { 
+        UIView.animate(withDuration: 0.3, animations: { 
             self.webViewContainer.alpha = 1.0
-        }
+        }) 
 
-        webView.layer.borderColor = UIColor.darkAmberColor.CGColor
+        webView.layer.borderColor = UIColor.darkAmberColor.cgColor
         webView.layer.borderWidth = 1
     }
 
-    @IBAction func dismissButtonPressed(sender: AnyObject) {
-        delegate?.contentWillClose(self)
-        dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func dismissButtonPressed(_ sender: AnyObject) {
+        delegate?.contentWillClose(openedViewController: self)
+        dismiss(animated: true, completion: nil)
     }
 
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden : Bool {
         return true
     }
 
-    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-        return [.LandscapeLeft,.LandscapeRight]
+    override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
+        return [.landscapeLeft,.landscapeRight]
     }
 }

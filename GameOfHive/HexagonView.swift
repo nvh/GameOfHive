@@ -9,10 +9,10 @@
 import UIKit
 
 protocol HexagonViewDelegate: class {
-    func userDidUpateCell(cell: HexagonView)
+    func userDidUpateCell(_ cell: HexagonView)
 }
 
-func hexagonPath(size: CGSize, lineWidth: CGFloat = 0) -> CGPath {
+func hexagonPath(_ size: CGSize, lineWidth: CGFloat = 0) -> CGPath {
         let height = size.height
         let width = size.width
         
@@ -26,30 +26,29 @@ func hexagonPath(size: CGSize, lineWidth: CGFloat = 0) -> CGPath {
         
         let topBottomOffset = (sqrt((3 * lineWidth * lineWidth) / 4))
         
-        let p1 = CGPointMake(width / 2.0, topBottomOffset)
-        let p2 = CGPointMake(width - (lineWidth / 2), height / 4)
-        let p3 = CGPointMake(p2.x, p2.y * 3)
-        let p4 = CGPointMake(p1.x, height - topBottomOffset)
-        let p5 = CGPointMake(lineWidth / 2, p3.y)
-        let p6 = CGPointMake(p5.x, p2.y)
+        let p1 = CGPoint(x: width / 2.0, y: topBottomOffset)
+        let p2 = CGPoint(x: width - (lineWidth / 2), y: height / 4)
+        let p3 = CGPoint(x: p2.x, y: p2.y * 3)
+        let p4 = CGPoint(x: p1.x, y: height - topBottomOffset)
+        let p5 = CGPoint(x: lineWidth / 2, y: p3.y)
+        let p6 = CGPoint(x: p5.x, y: p2.y)
         
     
         
-        let path = CGPathCreateMutable()
-        CGPathMoveToPoint(path, nil, p1.x, p1.y)
-        CGPathAddLineToPoint(path, nil, p2.x, p2.y)
-        CGPathAddLineToPoint(path, nil, p3.x, p3.y)
-        CGPathAddLineToPoint(path, nil, p4.x, p4.y)
-        CGPathAddLineToPoint(path, nil, p5.x, p5.y)
-    
-        CGPathAddLineToPoint(path, nil, p6.x, p6.y)
-    	CGPathCloseSubpath(path)
+        let path = CGMutablePath()
+        path.move(to: p1)
+        path.addLine(to: p2)
+        path.addLine(to: p3)
+        path.addLine(to: p4)
+        path.addLine(to: p5)
+        path.addLine(to: p6)
+    	path.closeSubpath()
     
         return path
 }
 
 class HexagonView: UIView {
-    static let path: CGPathRef = hexagonPath(cellSize, lineWidth: lineWidth)
+    static let path: CGPath = hexagonPath(cellSize, lineWidth: lineWidth)
 
     static let fillColor = UIColor.lightAmberColor
     
@@ -59,7 +58,7 @@ class HexagonView: UIView {
     var coordinate = Coordinate(row: NSNotFound, column: NSNotFound)
     var alive: Bool = false
 
-    var animationState: AnimationState = .Ready
+    var animationState: AnimationState = .ready
     
     weak var hexagonViewDelegate: HexagonViewDelegate?
   
@@ -70,13 +69,13 @@ class HexagonView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.alpha = HexagonView.deadAlpha
-        self.backgroundColor = UIColor.clearColor()
+        self.backgroundColor = UIColor.clear
     }
 
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        super.touchesEnded(touches, withEvent: event)
-        
-        guard let touch = touches.first where touches.count == 1 && CGPathContainsPoint(HexagonView.path, nil, touch.locationInView(self), false) else {
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesEnded(touches, with: event)
+
+        guard let touch = touches.first, touches.count == 1 && HexagonView.path.contains(touch.location(in: self)) else {
             return
     }
         // invert alive
@@ -85,16 +84,16 @@ class HexagonView: UIView {
         hexagonViewDelegate?.userDidUpateCell(self)
     }
     
-    override func pointInside(point: CGPoint, withEvent event: UIEvent?) -> Bool {
-        return CGPathContainsPoint(HexagonView.path, nil, point, false)
+    override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+        return HexagonView.path.contains(point)
     }
 
     
-    override func drawRect(rect: CGRect) {
+    override func draw(_ rect: CGRect) {
         let context = UIGraphicsGetCurrentContext()
-        CGContextSetLineWidth(context, lineWidth)
-        CGContextSetFillColorWithColor(context, HexagonView.fillColor.CGColor)
-        CGContextAddPath(context, HexagonView.path)
-        CGContextFillPath(context)
+        context?.setLineWidth(lineWidth)
+        context?.setFillColor(HexagonView.fillColor.cgColor)
+        context?.addPath(HexagonView.path)
+        context?.fillPath()
     }
 }

@@ -21,7 +21,7 @@ struct Rules {
         return Rules(environment: environment, fertility: fertility)
     }
     
-    private static func randomArray(from: Int = 1, to: Int = 6) -> [Int] {
+    fileprivate static func randomArray(_ from: Int = 1, to: Int = 6) -> [Int] {
         var result: [Int] = []
         for value in from...to {
             if arc4random_uniform(2) == 1 {
@@ -32,7 +32,7 @@ struct Rules {
     }
     
     
-    func update(hexagon: Hexagon, numberOfActiveNeighbors: Int) -> Hexagon {
+    func update(_ hexagon: Hexagon, numberOfActiveNeighbors: Int) -> Hexagon {
         if fertility.contains(numberOfActiveNeighbors) && !hexagon.active {
             return hexagon.setActive(true)
         } else if environment.contains(numberOfActiveNeighbors) {
@@ -41,7 +41,7 @@ struct Rules {
         return hexagon.setActive(false)
     }
     
-    func perform(grid: HexagonGrid) -> HexagonGrid {
+    func perform(_ grid: HexagonGrid) -> HexagonGrid {
         return grid.nextIteration(self)
     }
     
@@ -49,8 +49,8 @@ struct Rules {
 
 extension Rules: CustomStringConvertible {
     var description: String {
-        let envString = (environment.map{$0.description}).joinWithSeparator(",")
-        let fertString = (fertility.map{$0.description}).joinWithSeparator(",")
+        let envString = (environment.map{$0.description}).joined(separator: ",")
+        let fertString = (fertility.map{$0.description}).joined(separator: ",")
         return "\(envString)/\(fertString)"
     }
 }

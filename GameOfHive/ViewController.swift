@@ -9,7 +9,7 @@
 import UIKit
    
 // queue enforcing serial grid creation
-let gridQueue = dispatch_queue_create("grid_queue", DISPATCH_QUEUE_SERIAL)
+let gridQueue = DispatchQueue(label: "grid_queue", attributes: [])
 
 
 let cellSize: CGSize = {
@@ -18,9 +18,9 @@ let cellSize: CGSize = {
     return CGSize(width: cellWidth, height: cellHeight)
 }()
 
-func hexagonWidthForHeight(height: CGFloat) -> CGFloat {
+func hexagonWidthForHeight(_ height: CGFloat) -> CGFloat {
     var cellWidth = (sqrt((3 * height * height) / 16)) * 2
-    cellWidth = ceil(cellWidth) % 2 == 1 ? floor(cellWidth) : ceil(cellWidth)
+    cellWidth = ceil(cellWidth).truncatingRemainder(dividingBy: 2) == 1 ? floor(cellWidth) : ceil(cellWidth)
     return cellWidth
 }
 
@@ -31,7 +31,7 @@ class ViewController: UIViewController {
     
     var grid: HexagonGrid!
     var cells: [HexagonView] = []
-    var timer: NSTimer!
+    var timer: Timer!
 
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var contentView: UIView!
@@ -45,16 +45,16 @@ class ViewController: UIViewController {
     }
     
     let messageOverlay = UIControl()
-    let messageHUD = UIVisualEffectView(effect: UIBlurEffect(style: .Dark))
+    let messageHUD = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
 
     // MARK: UIViewController
     
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden : Bool {
         return true
     }
     
-    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-        return [.LandscapeLeft,.LandscapeRight]
+    override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
+        return [.landscapeLeft,.landscapeRight]
     }
     
     var shouldShowMessage: Bool {
@@ -75,16 +75,16 @@ class ViewController: UIViewController {
         
         view.addSubview(messageOverlay)
         messageOverlay.constrainToView(view)
-        messageOverlay.addTarget(self, action: #selector(dismissMessageOverlay), forControlEvents: .TouchUpInside)
+        messageOverlay.addTarget(self, action: #selector(dismissMessageOverlay), for: .touchUpInside)
         
         
         messageOverlay.addSubview(messageHUD)
-        messageHUD.userInteractionEnabled = false
+        messageHUD.isUserInteractionEnabled = false
         messageHUD.translatesAutoresizingMaskIntoConstraints = false
-        messageHUD.centerXAnchor.constraintEqualToAnchor(messageOverlay.centerXAnchor).active = true
-        messageHUD.centerYAnchor.constraintEqualToAnchor(messageOverlay.centerYAnchor).active = true
-        messageHUD.heightAnchor.constraintEqualToAnchor(messageOverlay.heightAnchor, multiplier: 0.5).active = true
-        messageHUD.heightAnchor.constraintEqualToAnchor(messageHUD.widthAnchor, multiplier: 1/(sqrt(3) / 2)).active = true
+        messageHUD.centerXAnchor.constraint(equalTo: messageOverlay.centerXAnchor).isActive = true
+        messageHUD.centerYAnchor.constraint(equalTo: messageOverlay.centerYAnchor).isActive = true
+        messageHUD.heightAnchor.constraint(equalTo: messageOverlay.heightAnchor, multiplier: 0.5).isActive = true
+        messageHUD.heightAnchor.constraint(equalTo: messageHUD.widthAnchor, multiplier: 1/(sqrt(3) / 2)).isActive = true
 
         let messageView = UILabel()
 
@@ -92,7 +92,7 @@ class ViewController: UIViewController {
         
         messageView.numberOfLines = 0
         messageView.adjustsFontSizeToFitWidth = true
-        messageView.textAlignment = .Center
+        messageView.textAlignment = .center
         messageView.constrainToView(messageHUD, margin: 20)
         messageView.text = "Tap with three fingers to show and hide the controls"
         messageView.font = UIFont(name: "Raleway-Medium", size: 20)
@@ -108,15 +108,15 @@ class ViewController: UIViewController {
         maskLayer.path = hexagonPath(messageHUD.frame.size, lineWidth: 5)
         let borderLayer = CAShapeLayer()
         borderLayer.path = maskLayer.path
-        borderLayer.strokeColor = UIColor.lightAmberColor.CGColor
+        borderLayer.strokeColor = UIColor.lightAmberColor.cgColor
         borderLayer.lineWidth = 5
-        borderLayer.fillColor = UIColor.clearColor().CGColor
+        borderLayer.fillColor = UIColor.clear.cgColor
         messageHUD.layer.mask = maskLayer
         messageHUD.layer.addSublayer(borderLayer)
     }
     
     var undoFileName: String {
-        return documentsDirectory.stringByAppendingPathComponent("undo.json")
+        return documentsDirectory.appendingPathComponent("undo.json")
     }
     
     func saveUndo() {
@@ -146,7 +146,7 @@ class ViewController: UIViewController {
         }
     }
     
-    func loadTemplate(identifier: String? = nil) {
+    func loadTemplate(_ identifier: String? = nil) {
         do {
             let template = try TemplateManager.shared.loadTemplate(identifier)
             loadTemplate(template)
@@ -155,14 +155,14 @@ class ViewController: UIViewController {
         }
     }
     
-    func loadGrid(grid: HexagonGrid) {
+    func loadGrid(_ grid: HexagonGrid) {
         stop()
         self.grid = grid
         drawGrid(self.grid, animationDuration: 0.1)
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        guard let menu = segue.destinationViewController as? MenuController where segue.identifier == "presentMenu" else {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let menu = segue.destination as? MenuController, segue.identifier == "presentMenu" else {
             return
         }
         
@@ -180,30 +180,30 @@ class ViewController: UIViewController {
     
     func openMenu() {
         stop()
-        performSegueWithIdentifier("presentMenu", sender: self)
+        performSegue(withIdentifier: "presentMenu", sender: self)
     }
     
-    func toggleButtons(gestureRecognizer: UIGestureRecognizer?) {
-        if let constraint = buttonsVisibleConstraint where constraint.active {
-            buttonsVisibleConstraint?.active = false
-            buttonsHiddenConstraint?.active = true
-            clearButtonVisibleConstraint?.active = false
-            clearButtonHiddenConstraint?.active = true
-        } else if let constraint = buttonsHiddenConstraint where constraint.active {
-            buttonsHiddenConstraint?.active = false
-            buttonsVisibleConstraint?.active = true
-            clearButtonHiddenConstraint?.active = false
-            clearButtonVisibleConstraint?.active = true
+    @objc func toggleButtons(_ gestureRecognizer: UIGestureRecognizer?) {
+        if let constraint = buttonsVisibleConstraint, constraint.isActive {
+            buttonsVisibleConstraint?.isActive = false
+            buttonsHiddenConstraint?.isActive = true
+            clearButtonVisibleConstraint?.isActive = false
+            clearButtonHiddenConstraint?.isActive = true
+        } else if let constraint = buttonsHiddenConstraint, constraint.isActive {
+            buttonsHiddenConstraint?.isActive = false
+            buttonsVisibleConstraint?.isActive = true
+            clearButtonHiddenConstraint?.isActive = false
+            clearButtonVisibleConstraint?.isActive = true
         }
-        UIView.animateWithDuration(0.45, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .BeginFromCurrentState, animations: {
+        UIView.animate(withDuration: 0.45, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .beginFromCurrentState, animations: {
             self.view.layoutIfNeeded()
         }, completion: nil)
     }
     
-    func dismissMessageOverlay() {
+    @objc func dismissMessageOverlay() {
         self.toggleButtons(nil)
-        UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .BeginFromCurrentState, animations: {
-            self.messageHUD.transform = CGAffineTransformMakeScale(0.01, 0.01)
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .beginFromCurrentState, animations: {
+            self.messageHUD.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
             }) { finished in
             self.messageOverlay.removeFromSuperview()
             self.togglePlayback()
@@ -216,7 +216,7 @@ class ViewController: UIViewController {
         assert(timer == nil, "Expect not running")
         assert(grid == nil, "Expect grid does not exist")
 
-        grid = gridFromViewDimensions(view.bounds.size, cellSize: cellSize, gridType: .Random)
+        grid = gridFromViewDimensions(view.bounds.size, cellSize: cellSize, gridType: .random)
 
         let viewYSpacing = (3 * cellSize.height) / 4
         let xOffset = -cellSize.width/2
@@ -239,17 +239,17 @@ class ViewController: UIViewController {
     }
     
     func updateGrid() {
-        dispatch_async(gridQueue) {
+        gridQueue.async {
             let grid = self.rules.perform(self.grid)
             self.grid = grid
-            dispatch_async(dispatch_get_main_queue()) {
+            DispatchQueue.main.async {
                 self.drawGrid(grid)
             }
         }
     }
     
-    func drawGrid(grid: HexagonGrid, animationDuration: Double = 0.05) {
-        assert(NSThread.isMainThread(), "Expect main thread")
+    func drawGrid(_ grid: HexagonGrid, animationDuration: Double = 0.05) {
+        assert(Thread.isMainThread, "Expect main thread")
         
         // split cells by needed action. filter unchanged cells
         var cellsToActivate: [HexagonView] = []
@@ -289,30 +289,30 @@ class ViewController: UIViewController {
 
     
     // MARK: Timer
-    func createTimer() -> NSTimer {
-        return NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: #selector(tick), userInfo: nil, repeats: true)
+    func createTimer() -> Timer {
+        return Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(tick), userInfo: nil, repeats: true)
     }
     
-    func tick(timer: NSTimer) {
+    @objc func tick(_ timer: Timer) {
         updateGrid()
     }
     
-    func cellsUserInteraction(enabled enabled: Bool) {
+    func cellsUserInteraction(enabled: Bool) {
         cells.forEach { cell in
-            cell.userInteractionEnabled = enabled
+            cell.isUserInteractionEnabled = enabled
         }
     }
     
-    private func start() {
+    fileprivate func start() {
         
         cellsUserInteraction(enabled: false)
         timer?.invalidate()
         timer = createTimer()
         timer.fire()
-        playButton.setImage(UIImage(named: "button_stop"), forState: .Normal)
+        playButton.setImage(UIImage(named: "button_stop"), for: UIControlState())
     }
     
-    private func stop() {
+    fileprivate func stop() {
         guard playing else {
             return
         }
@@ -321,22 +321,22 @@ class ViewController: UIViewController {
         
         timer?.invalidate()
         timer = nil
-        playButton.setImage(UIImage(named: "button_play"), forState: .Normal)
+        playButton.setImage(UIImage(named: "button_play"), for: UIControlState())
     }
     
-    private func clear() {
+    fileprivate func clear() {
         stop()
-        dispatch_async(gridQueue) {
-            let grid = gridFromViewDimensions(self.view.bounds.size, cellSize: cellSize, gridType: .Empty)
+        gridQueue.async {
+            let grid = gridFromViewDimensions(self.view.bounds.size, cellSize: cellSize, gridType: .empty)
             self.grid = grid
-            dispatch_async(dispatch_get_main_queue()) {
+            DispatchQueue.main.async {
                 self.drawGrid(grid)
             }
         }
     }
 
-    func didDrawWithFinger(recognizer: UIPanGestureRecognizer) {
-        guard let cellView = view.hitTest(recognizer.locationInView(view), withEvent: nil) as? HexagonView else {
+    @objc func didDrawWithFinger(_ recognizer: UIPanGestureRecognizer) {
+        guard let cellView = view.hitTest(recognizer.location(in: view), with: nil) as? HexagonView else {
             return
         }
         cellView.alive = true
@@ -347,13 +347,13 @@ class ViewController: UIViewController {
 
 // MARK: HexagonView Delegate
 extension ViewController: HexagonViewDelegate {
-    func userDidUpateCell(cell: HexagonView) {
-        dispatch_async(gridQueue) {
+    func userDidUpateCell(_ cell: HexagonView) {
+        gridQueue.async {
             let grid = self.grid.setActive(cell.alive, atLocation: cell.coordinate)
             
             self.grid = grid
             
-            dispatch_async(dispatch_get_main_queue()){
+            DispatchQueue.main.async{
                 let alive = cell.alive
                 let start: CGFloat = alive ? HexagonView.deadAlpha : HexagonView.aliveAlpha
                 let end: CGFloat = alive ? HexagonView.aliveAlpha : HexagonView.deadAlpha
@@ -367,12 +367,12 @@ extension ViewController: HexagonViewDelegate {
 
 //MARK: Shake!
 extension ViewController {
-    override func canBecomeFirstResponder() -> Bool {
+    override var canBecomeFirstResponder : Bool {
         return true
     }
     
-    override func motionEnded(motion: UIEventSubtype, withEvent event: UIEvent?) {
-        guard motion == .MotionShake else {
+    override func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
+        guard motion == .motionShake else {
             return
         }
         
@@ -397,29 +397,29 @@ extension ViewController {
         }
     }
     
-    @IBAction func didTapUndo(sender: UIButton) {
+    @IBAction func didTapUndo(_ sender: UIButton) {
         loadUndo()
     }
     
-    @IBAction func didTapStep(sender: UIButton) {
+    @IBAction func didTapStep(_ sender: UIButton) {
         stop()
         updateGrid()
     }
     
-    @IBAction func didTapLoad(sender: UIButton) {
+    @IBAction func didTapLoad(_ sender: UIButton) {
         loadTemplate()
     }
     
-    @IBAction func didTapSave(sender: UIButton) {
+    @IBAction func didTapSave(_ sender: UIButton) {
         saveTemplate()
     }
     
-    @IBAction func didTapMenu(sender: UIButton) {
+    @IBAction func didTapMenu(_ sender: UIButton) {
         toggleButtons(nil)
         openMenu()
     }
     
-    @IBAction func didTapClearButton(sender: UIButton) {
+    @IBAction func didTapClearButton(_ sender: UIButton) {
         clear()
     }
 }

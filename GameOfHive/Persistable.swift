@@ -7,45 +7,46 @@
 //
 
 import Foundation
-import Argo
+//import Argo
 
-enum LoadError: ErrorType {
-    case FileDoesNotExist
-    case DecodeFailed(error: DecodeError)
+enum LoadError: Error {
+    case fileDoesNotExist
+    case decodeFailed(error: Error)
 }
 
-protocol Persistable: Saveable, Loadable { }
+protocol Persistable: Saveable , Loadable { }
 
 protocol Saveable {
-    func save(path: String) throws
+    func save(_ path: String) throws
 }
 
-extension Saveable where Self:Encodable {
-    func save(path: String) throws {
-        try self.encode().toJSONString.writeToFile(path, atomically: true, encoding: NSUTF8StringEncoding)
+extension Saveable /*where Self:Encodable*/ {
+    func save(_ path: String) throws {
+//        try self.encode().toJSONString.writeToFile(path, atomically: true, encoding: String.Encoding.utf8)
     }
 }
 
 protocol Loadable {
-    static func load(path: String) throws -> Self
+    static func load(_ path: String) throws -> Self
 }
 
-extension Loadable where Self:Decodable {
-    static func load(path: String) throws -> Self.DecodedType {
-        guard let data = NSData(contentsOfFile: path) else {
-            throw LoadError.FileDoesNotExist
-        }
-        
-        let object = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(rawValue: 0))
-        let json = JSON.parse(object)
-        let decoded: Decoded<Self.DecodedType> = self.decode(json)
-        
-        switch decoded {
-        case .Success(let value):
-            return value
-        case .Failure(let error):
-            throw LoadError.DecodeFailed(error: error)
-            
-        }
+extension Loadable /*where Self:Decodable*/ {
+    static func load(_ path: String) throws -> Self {
+        throw LoadError.fileDoesNotExist
+//        guard let data = NSData(contentsOfFile: path) else {
+//            throw LoadError.fileDoesNotExist
+//        }
+
+//        let object = try JSONSerialization.jsonObject(with: data as Data, options: JSONSerialization.ReadingOptions(rawValue: 0))
+//        let json = JSON.parse(object)
+//        let decoded: Decoded<Self.DecodedType> = self.decode(json)
+//
+//        switch decoded {
+//        case .Success(let value):
+//            return value
+//        case .Failure(let error):
+//            throw LoadError.DecodeFailed(error: error)
+//
+//        }
     }
 }

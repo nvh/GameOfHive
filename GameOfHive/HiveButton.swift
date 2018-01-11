@@ -9,8 +9,8 @@
 import UIKit
 
 enum HiveButtonStyle: CGFloat {
-    case Big = 16
-    case Small = 14
+    case big = 16
+    case small = 14
 }
 
 @IBDesignable
@@ -19,10 +19,10 @@ class HiveButton: UIButton {
     // MARK: Lifecycle
     let backgroundView = UIView()
     
-    var style: HiveButtonStyle = .Big {
+    var style: HiveButtonStyle = .big {
         didSet {
             titleLabel?.numberOfLines = 0
-            titleLabel?.textAlignment = .Center
+            titleLabel?.textAlignment = .center
             titleLabel?.font = UIFont(name: "Raleway-Medium", size: style.rawValue)
         }
     }
@@ -47,19 +47,19 @@ class HiveButton: UIButton {
         }
     }
 
-    private func initialize() {
+    fileprivate func initialize() {
         setNeedsLayout()
         layoutIfNeeded()
 
         titleLabel?.font = UIFont(name: "Raleway-Medium", size: style.rawValue)
         titleLabel?.adjustsFontSizeToFitWidth = true
-        setTitleColor(UIColor.darkAmberColor, forState: .Normal)
+        setTitleColor(UIColor.darkAmberColor, for: UIControlState())
         tintColor = UIColor.darkAmberColor
 
         insertSubview(backgroundView, belowSubview: titleLabel!)
         backgroundView.constrainToView(self)
         backgroundView.backgroundColor = UIColor.menuButtonBackgroundColor
-        backgroundView.userInteractionEnabled = false
+        backgroundView.isUserInteractionEnabled = false
     }
     
     override func layoutSubviews() {
@@ -67,7 +67,7 @@ class HiveButton: UIButton {
         backgroundView.frame = bounds
     }
 
-    override func drawRect(rect: CGRect) {
+    override func draw(_ rect: CGRect) {
         updateLayers()
     }
 
@@ -76,9 +76,9 @@ class HiveButton: UIButton {
         maskLayer.path = hexagonPath(backgroundView.frame.size)
         let borderLayer = CAShapeLayer()
         borderLayer.path = maskLayer.path
-        borderLayer.strokeColor = UIColor.darkAmberColor.CGColor
-        borderLayer.lineWidth = style == HiveButtonStyle.Big ? 5 : 2
-        borderLayer.fillColor = UIColor.clearColor().CGColor
+        borderLayer.strokeColor = UIColor.darkAmberColor.cgColor
+        borderLayer.lineWidth = style == HiveButtonStyle.big ? 5 : 2
+        borderLayer.fillColor = UIColor.clear.cgColor
         backgroundView.layer.mask = maskLayer
         backgroundView.layer.addSublayer(borderLayer)
     }

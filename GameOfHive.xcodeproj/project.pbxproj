@@ -39,6 +39,7 @@
 		C35B19141CB13E5A003DF56C /* ContentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C35B19131CB13E5A003DF56C /* ContentController.swift */; };
 		C35B19161CB16862003DF56C /* TemplateContainerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C35B19151CB16862003DF56C /* TemplateContainerController.swift */; };
 		C3881F921B0D4915006D9CF0 /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3881F911B0D4915006D9CF0 /* MenuController.swift */; };
+		CA5088B0FE862B2844D5972F /* Pods_GameOfHiveTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AFBC3B78DF32E6D568D010C /* Pods_GameOfHiveTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,7 +75,9 @@
 		1CE6205E1B0C8E350072BBF9 /* GameOfHiveTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOfHiveTests.swift; sourceTree = "<group>"; };
 		1CE620681B0C91CD0072BBF9 /* HexagonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HexagonView.swift; sourceTree = "<group>"; };
 		79F4CFD69591550CEEA9C4E1 /* Pods-GameOfHive.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GameOfHive.release.xcconfig"; path = "Pods/Target Support Files/Pods-GameOfHive/Pods-GameOfHive.release.xcconfig"; sourceTree = "<group>"; };
+		7AFBC3B78DF32E6D568D010C /* Pods_GameOfHiveTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GameOfHiveTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		80A15281B5CFE264A13F45B4 /* Pods-GameOfHive.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GameOfHive.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GameOfHive/Pods-GameOfHive.debug.xcconfig"; sourceTree = "<group>"; };
+		96398BCA14E2B66D515E846F /* Pods-GameOfHiveTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GameOfHiveTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-GameOfHiveTests/Pods-GameOfHiveTests.release.xcconfig"; sourceTree = "<group>"; };
 		B38DD5E61B0C9BB30064E7E4 /* Hexagon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hexagon.swift; sourceTree = "<group>"; };
 		B38DD5E81B0CA52D0064E7E4 /* HexagonGrid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HexagonGrid.swift; sourceTree = "<group>"; };
 		B38DD5EA1B0CA7A60064E7E4 /* GridTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridTests.swift; sourceTree = "<group>"; };
@@ -89,6 +92,7 @@
 		C35B19131CB13E5A003DF56C /* ContentController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentController.swift; sourceTree = "<group>"; };
 		C35B19151CB16862003DF56C /* TemplateContainerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TemplateContainerController.swift; sourceTree = "<group>"; };
 		C3881F911B0D4915006D9CF0 /* MenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuController.swift; sourceTree = "<group>"; };
+		C522901E42DB3946A73A1670 /* Pods-GameOfHiveTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GameOfHiveTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GameOfHiveTests/Pods-GameOfHiveTests.debug.xcconfig"; sourceTree = "<group>"; };
 		CF2FA7DC67DF597D0AD3E8B0 /* Pods_GameOfHive.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GameOfHive.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -105,6 +109,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA5088B0FE862B2844D5972F /* Pods_GameOfHiveTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -193,6 +198,8 @@
 			children = (
 				80A15281B5CFE264A13F45B4 /* Pods-GameOfHive.debug.xcconfig */,
 				79F4CFD69591550CEEA9C4E1 /* Pods-GameOfHive.release.xcconfig */,
+				C522901E42DB3946A73A1670 /* Pods-GameOfHiveTests.debug.xcconfig */,
+				96398BCA14E2B66D515E846F /* Pods-GameOfHiveTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -226,6 +233,7 @@
 			isa = PBXGroup;
 			children = (
 				CF2FA7DC67DF597D0AD3E8B0 /* Pods_GameOfHive.framework */,
+				7AFBC3B78DF32E6D568D010C /* Pods_GameOfHiveTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -237,12 +245,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1CE620621B0C8E350072BBF9 /* Build configuration list for PBXNativeTarget "GameOfHive" */;
 			buildPhases = (
-				1F15963D438D73F792338103 /* Check Pods Manifest.lock */,
+				1F15963D438D73F792338103 /* [CP] Check Pods Manifest.lock */,
 				1CE6203F1B0C8E350072BBF9 /* Sources */,
 				1CE620401B0C8E350072BBF9 /* Frameworks */,
 				1CE620411B0C8E350072BBF9 /* Resources */,
-				564750F717BD7CB76470BEDE /* Embed Pods Frameworks */,
-				C33950A1DFA82C525F503C70 /* Copy Pods Resources */,
+				564750F717BD7CB76470BEDE /* [CP] Embed Pods Frameworks */,
+				C33950A1DFA82C525F503C70 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -257,9 +265,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1CE620651B0C8E350072BBF9 /* Build configuration list for PBXNativeTarget "GameOfHiveTests" */;
 			buildPhases = (
+				59429E45D19FA7E71D2B3385 /* [CP] Check Pods Manifest.lock */,
 				1CE620541B0C8E350072BBF9 /* Sources */,
 				1CE620551B0C8E350072BBF9 /* Frameworks */,
 				1CE620561B0C8E350072BBF9 /* Resources */,
+				F81E779C69E95E50B2D40028 /* [CP] Embed Pods Frameworks */,
+				150295C66D4332ED62EBDF3D /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -279,15 +290,17 @@
 			attributes = {
 				LastSwiftMigration = 0730;
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0920;
 				ORGANIZATIONNAME = Beetles;
 				TargetAttributes = {
 					1CE620421B0C8E350072BBF9 = {
 						CreatedOnToolsVersion = 6.3;
 						DevelopmentTeam = 729WVZ5N33;
+						LastSwiftMigration = 0920;
 					};
 					1CE620571B0C8E350072BBF9 = {
 						CreatedOnToolsVersion = 6.3;
+						LastSwiftMigration = 0920;
 						TestTargetID = 1CE620421B0C8E350072BBF9;
 					};
 				};
@@ -333,49 +346,105 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		1F15963D438D73F792338103 /* Check Pods Manifest.lock */ = {
+		150295C66D4332ED62EBDF3D /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-GameOfHiveTests/Pods-GameOfHiveTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		564750F717BD7CB76470BEDE /* Embed Pods Frameworks */ = {
+		1F15963D438D73F792338103 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-GameOfHive-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		564750F717BD7CB76470BEDE /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-GameOfHive/Pods-GameOfHive-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Argo/Argo.framework",
+				"${BUILT_PRODUCTS_DIR}/Runes/Runes.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Argo.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Runes.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-GameOfHive/Pods-GameOfHive-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C33950A1DFA82C525F503C70 /* Copy Pods Resources */ = {
+		59429E45D19FA7E71D2B3385 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-GameOfHiveTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C33950A1DFA82C525F503C70 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-GameOfHive/Pods-GameOfHive-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F81E779C69E95E50B2D40028 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-GameOfHiveTests/Pods-GameOfHiveTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -460,13 +529,21 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -495,6 +572,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -508,13 +586,21 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -534,6 +620,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -544,6 +632,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 80A15281B5CFE264A13F45B4 /* Pods-GameOfHive.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -554,6 +643,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.gameofhive.release;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -561,6 +652,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 79F4CFD69591550CEEA9C4E1 /* Pods-GameOfHive.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -570,11 +662,14 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.gameofhive.release;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
 		1CE620661B0C8E350072BBF9 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C522901E42DB3946A73A1670 /* Pods-GameOfHiveTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -590,12 +685,15 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Beetles.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GameOfHive.app/GameOfHive";
 			};
 			name = Debug;
 		};
 		1CE620671B0C8E350072BBF9 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 96398BCA14E2B66D515E846F /* Pods-GameOfHiveTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -607,6 +705,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Beetles.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GameOfHive.app/GameOfHive";
 			};
 			name = Release;

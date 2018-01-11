@@ -11,70 +11,70 @@ import UIKit
 private let lastSavedTemplateIdentifierKey = "org.gameofhive.lastSavedTemplateIdentifier"
 
 private var lastSavedTemplateIdentifier: String {
-    return NSUserDefaults.standardUserDefaults().objectForKey(lastSavedTemplateIdentifierKey)! as! String
+    return UserDefaults.standard.object(forKey: lastSavedTemplateIdentifierKey)! as! String
 }
 
 class TemplateManager {
-    enum Error: ErrorType {
-        case ImageFailedSaving
+    enum TemplateError: Error {
+        case imageFailedSaving
     }
     
     static let shared = TemplateManager()
-    private let fileManager = NSFileManager.defaultManager()
+    fileprivate let fileManager = FileManager.default
     
     init() {
         createDirectory(atPath: jsonDirectory as String)
         createDirectory(atPath: imageDirectory as String)
     }
     
-    private func createDirectory(atPath path: String) {
-        guard !fileManager.fileExistsAtPath(path) else {
+    fileprivate func createDirectory(atPath path: String) {
+        guard !fileManager.fileExists(atPath: path) else {
             return
         }
         
         do {
-            try fileManager.createDirectoryAtPath(path, withIntermediateDirectories: true, attributes: nil)
+            try fileManager.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: nil)
         } catch {
             print("Error creating directory: \(error)")
         }
     }
     
-    func loadTemplate(identifier: String? = nil) throws -> Template {
+    func loadTemplate(_ identifier: String? = nil) throws -> Template {
         let templateIdentifier = identifier ?? lastSavedTemplateIdentifier
         let templateFileName = "\(templateIdentifier).json"
-        let templatePath = templateDirectory.stringByAppendingPathComponent(templateFileName)
+        let templatePath = templateDirectory.appendingPathComponent(templateFileName)
         return try Template.load(templatePath)
     }
     
-    func saveTemplate(grid grid: HexagonGrid, image: UIImage, title: String? = nil) throws {
+    func saveTemplate(grid: HexagonGrid, image: UIImage, title: String? = nil) throws {
         let identifier = String(grid.hashValue)
-        let date = NSDate()
-        let title = title ?? date.iso8601 ?? identifier
+        let date = Date()
+        let title = title /*?? date.iso8601*/ ?? identifier
         
         let imageFileName = "\(identifier).png"
-        let imagePath = imageDirectory.stringByAppendingPathComponent(imageFileName)
-        guard let imageData = UIImagePNGRepresentation(image) where imageData.writeToFile(imagePath, atomically: true) else {
-            throw Error.ImageFailedSaving
+        let imagePath = imageDirectory.appendingPathComponent(imageFileName)
+        guard let imageData = UIImagePNGRepresentation(image), ((try? imageData.write(to: URL(fileURLWithPath: imagePath), options: [.atomic])) != nil) else {
+            throw TemplateError.imageFailedSaving
         }
         
         let gridFileName = "\(identifier).json"
-        let gridPath = jsonDirectory.stringByAppendingPathComponent(gridFileName)
+        let gridPath = jsonDirectory.appendingPathComponent(gridFileName)
         try grid.save(gridPath)
         
         let templateFileName = gridFileName
-        let templatePath = templateDirectory.stringByAppendingPathComponent(templateFileName)
+        let templatePath = templateDirectory.appendingPathComponent(templateFileName)
         let template = Template(identifier: identifier, title: title, date: date, gridPath: gridPath, imagePath: imagePath)
         try template.save(templatePath)
         
-        NSUserDefaults.standardUserDefaults().setObject(identifier, forKey: lastSavedTemplateIdentifierKey)
-    }
+        UserDefaults.standard.set(identifier, forKey: lastSavedTemplateIdentifierKey)
+    }    
     
     func allTemplates() -> [Template] {
         
-        guard let filenames = try? NSFileManager.defaultManager().contentsOfDirectoryAtPath(templateDirectory as String) else {
+        guard let filenames = try? FileManager.default.contentsOfDirectory(atPath: templateDirectory as String) else {
             return []
         }
-        let paths = filenames.filter { $0.hasSuffix(".json") }.map(templateDirectory.stringByAppendingPathComponent)
+        let paths = filenames.filter { $0.hasSuffix(".json") }.map(templateDirectory.appendingPathComponent)
         return paths.flatMap { path in
             do { return try Template.load(path) }
             catch { return nil }

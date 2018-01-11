@@ -9,22 +9,22 @@
 import UIKit
 
 extension UIView {
-    func constrainToView(view: UIView, margin: CGFloat = 10) {
+    func constrainToView(_ view: UIView, margin: CGFloat = 10) {
         translatesAutoresizingMaskIntoConstraints = false
-        topAnchor.constraintEqualToAnchor(view.topAnchor, constant: margin).active = true
-        bottomAnchor.constraintEqualToAnchor(view.bottomAnchor, constant: -margin).active = true
-        leftAnchor.constraintEqualToAnchor(view.leftAnchor, constant: margin).active = true
-        rightAnchor.constraintEqualToAnchor(view.rightAnchor, constant: -margin).active = true
+        topAnchor.constraint(equalTo: view.topAnchor, constant: margin).isActive = true
+        bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -margin).isActive = true
+        leftAnchor.constraint(equalTo: view.leftAnchor, constant: margin).isActive = true
+        rightAnchor.constraint(equalTo: view.rightAnchor, constant: -margin).isActive = true
     }
     
-    func captureScreenshot(scale scale: CGFloat) -> UIImage {
-        let scaleTransform = CGAffineTransformMakeScale(scale, scale)
-        let size = CGSizeApplyAffineTransform(self.bounds.size, scaleTransform)
+    func captureScreenshot(scale: CGFloat) -> UIImage {
+        let scaleTransform = CGAffineTransform(scaleX: scale, y: scale)
+        let size = self.bounds.size.applying(scaleTransform)
         let rect = CGRect(origin: CGPoint.zero, size: size)
         UIGraphicsBeginImageContextWithOptions(size, true, 0)
-        self.drawViewHierarchyInRect(rect, afterScreenUpdates: true)
+        self.drawHierarchy(in: rect, afterScreenUpdates: true)
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        return image
+        return image!
     }
 }
