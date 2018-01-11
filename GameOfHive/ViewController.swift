@@ -138,7 +138,7 @@ class ViewController: UIViewController {
     
     func saveTemplate() {
         do {
-            let image = contentView.captureScreenshot(scale: 0.1)
+            let image = contentView.captureScreenshot(scale: 0.5)
             try TemplateManager.shared.saveTemplate(grid: grid, image: image)
 
         } catch let error {
@@ -148,8 +148,8 @@ class ViewController: UIViewController {
     
     func loadTemplate(identifier: String? = nil) {
         do {
-            let grid = try TemplateManager.shared.loadTemplate(identifier).grid()
-            loadGrid(grid)
+            let template = try TemplateManager.shared.loadTemplate(identifier)
+            loadTemplate(template)
         } catch {
             print("error loading template", error)
         }
@@ -167,6 +167,15 @@ class ViewController: UIViewController {
         }
         
         menu.delegate = self
+    }
+    
+    func loadTemplate(template: Template) {
+        do {
+            let grid = try template.grid()
+            loadGrid(grid)
+        } catch {
+            print("error loading template",error)
+        }
     }
     
     func openMenu() {
@@ -356,7 +365,6 @@ extension ViewController: HexagonViewDelegate {
     }
 }
 
-
 //MARK: Shake!
 extension ViewController {
     override func canBecomeFirstResponder() -> Bool {
@@ -373,7 +381,7 @@ extension ViewController {
 }
 
 extension ViewController: MenuDelegate {
-    func menuWillClose(menu: MenuController) {
+    func menuDidClose(menu: MenuController) {
         toggleButtons(nil)
         menu.delegate = nil
     }
