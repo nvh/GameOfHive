@@ -31,42 +31,42 @@ class TemplateViewController: UICollectionViewController {
         super.awakeFromNib()
         dataSource.refresh()
         collectionView!.backgroundColor = UIColor.backgroundColor
-        collectionView!.layer.borderColor = UIColor.darkAmberColor.CGColor
+        collectionView!.layer.borderColor = UIColor.darkAmberColor.cgColor
         collectionView!.layer.borderWidth = 1
     }
     
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden: Bool {
         return true
     }
 
-    override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return dataSource.numberOfSections
     }
     
-    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         print(dataSource.numberOfTemplates(inSection: section))
         return dataSource.numberOfTemplates(inSection: section)
     }
     
-    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCellWithReuseIdentifier(TemplateCell.reuseIdentifier, forIndexPath: indexPath) as? TemplateCell,
-                template = dataSource.template(atIndexPath: indexPath) else {
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TemplateCell.reuseIdentifier, for: indexPath as IndexPath) as? TemplateCell,
+            let template = dataSource.template(atIndexPath: indexPath) else {
                 return UICollectionViewCell()
         }
         
         cell.imageView?.image = template.image
-        let dateFormat = NSDateFormatter.init()
-        dateFormat.dateStyle = NSDateFormatterStyle.ShortStyle
-        dateFormat.timeStyle = NSDateFormatterStyle.MediumStyle
-        cell.dateLabel?.text = dateFormat.stringFromDate(template.date)
+        let dateFormat = DateFormatter.init()
+        dateFormat.dateStyle = DateFormatter.Style.short
+        dateFormat.timeStyle = DateFormatter.Style.medium
+        cell.dateLabel?.text = dateFormat.string(from: template.date)
         return cell
     }
     
-    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt  indexPath: IndexPath) {
         guard let template = dataSource.template(atIndexPath: indexPath) else {
             return
         }
-        delegate?.didSelectTemplate(template)
-        dismissViewControllerAnimated(true, completion: nil)
+        delegate?.didSelectTemplate(template: template)
+        dismiss(animated: true, completion: nil)
     }
 }

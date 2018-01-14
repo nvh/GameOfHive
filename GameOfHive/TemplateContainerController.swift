@@ -15,23 +15,23 @@ class TemplateContainerController: UIViewController {
     weak var templateDelegate: TemplatePickerDelegate?
     var leftOffset: CGFloat = 120
     
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden: Bool {
         return true
     }
 
-    @IBAction func dismissButtonPressed(sender: UIButton) {
-        templateDelegate?.contentWillClose(self)
-        dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func dismissButtonPressed(_ sender: UIButton) {
+        templateDelegate?.contentWillClose(openedViewController: self)
+        dismiss(animated: true, completion: nil)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
         leftOffsetConstraint.constant = leftOffset + 60
     }
 
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        guard let destination = segue.destinationViewController as? TemplateViewController where segue.identifier == "embedTemplates" else {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let destination = segue.destination as? TemplateViewController, segue.identifier == "embedTemplates" else {
             return
         }
 

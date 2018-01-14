@@ -23,7 +23,7 @@ class TemplateDataSource {
         return templates.count
     }
     
-    func template(atIndexPath indexPath: NSIndexPath) -> Template? {
+    func template(atIndexPath indexPath: IndexPath) -> Template? {
         guard indexPath.item < numberOfTemplates(inSection: indexPath.section) else {
             return nil
         }

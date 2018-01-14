@@ -15,7 +15,7 @@ enum MenuPressedState {
 
 protocol MenuDelegate: class {
     func menuDidClose(menu: MenuController)
-    func loadTemplate(template: Template)
+    func load(template: Template)
 }
 
 enum Content {
@@ -37,19 +37,19 @@ class MenuController: UIViewController {
     fileprivate let buttonModels = [
         MenuItemModel(
             title: "About",
-            content: .webpage(URL(string: "https://tomasharkema.github.io/GameOfHive/about.html"))),
+            content: .webpage(URL(string: "https://tomasharkema.github.io/GameOfHive/about.html")!)),
         MenuItemModel(
             title: "Credits",
-            content: .webpage(URL(string: "https://tomasharkema.github.io/GameOfHive/credits.html"))),
+            content: .webpage(URL(string: "https://tomasharkema.github.io/GameOfHive/credits.html")!)),
         MenuItemModel(
             title: "Templates",
             content: .templatePicker),
         MenuItemModel(
             title: "Saved Hives",
-            content: .webpage(URL(string: "https://tomasharkema.github.io/GameOfHive/"))),
+            content: .webpage(URL(string: "https://tomasharkema.github.io/GameOfHive/")!)),
         MenuItemModel(
             title: "Donate",
-            content: .webpage(URL(string: "https://tomasharkema.github.io/GameOfHive/donate.html"))),
+            content: .webpage(URL(string: "https://tomasharkema.github.io/GameOfHive/donate.html")!)),
         MenuItemModel(
             title: "Video",
             content: .webpage(URL(string: "https://tomasharkema.github.io/GameOfHive/video.html")!)),]
@@ -229,7 +229,7 @@ extension MenuController: SubMenuDelegate {
 
 extension MenuController: TemplatePickerDelegate {
     func didSelectTemplate(template: Template) {
-        delegate?.loadTemplate(template: template)
+        delegate?.load(template: template)
         animateOut()
     }
 }
@@ -256,35 +256,35 @@ extension MenuController {
         }
 
         switch item.content {
-        case .Webpage:
+        case .webpage:
             performSegue(withIdentifier: "presentContentController", sender: self)
             animateButtonToControllerPoint(hiveButton: hiveButton) { _ in }
-        case .TemplatePicker:
+        case .templatePicker:
             performSegue(withIdentifier: "openTemplatePicker", sender: self)
             animateButtonToControllerPoint(hiveButton: hiveButton) { _ in }
         }
     }
 
-  override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?) {
-    guard let item = buttonModels.filter({ $0.title == self.openedHive?.titleForState(.Normal) }).first else {
-        return
-    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let item = buttonModels.filter({ $0.title == self.openedHive?.title(for: .normal) }).first else {
+            return
+        }
 
-    switch item.content {
-    case let .Webpage(url):
-        guard let destination = segue.destination as? ContentViewController, segue.identifier == "presentContentController" else {
-            return
+        switch item.content {
+        case let .webpage(url):
+            guard let destination = segue.destination as? ContentViewController, segue.identifier == "presentContentController" else {
+                return
+            }
+            destination.leftOffset = hexagonWidthForHeight(height/2)
+            destination.webView.load(URLRequest(url: url))
+            destination.delegate = self
+        case .templatePicker:
+            guard let destination = segue.destination as? TemplateContainerController, segue.identifier == "openTemplatePicker" else {
+                return
+            }
+            destination.templateDelegate = self
+            print("preparing for template picker segue")
         }
-        destination.leftOffset = hexagonWidthForHeight(height/2)
-        destination.webView.loadRequest(NSURLRequest(URL: url))
-        destination.delegate = self
-    case .TemplatePicker:
-        guard let destination = segue.destination as? TemplateContainerController, segue.identifier == "openTemplatePicker" else {
-            return
-        }
-        destination.templateDelegate = self
-        print("preparing for template picker segue")
-    }
   }
 
 }

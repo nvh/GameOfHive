@@ -146,10 +146,10 @@ class ViewController: UIViewController {
         }
     }
     
-    func loadTemplate(_ identifier: String? = nil) {
+    func loadTemplate(with identifier: String? = nil) {
         do {
             let template = try TemplateManager.shared.loadTemplate(identifier)
-            loadTemplate(template)
+            load(template: template)
         } catch {
             print("error loading template", error)
         }
@@ -169,7 +169,7 @@ class ViewController: UIViewController {
         menu.delegate = self
     }
     
-    func loadTemplate(template: Template) {
+    func load(template: Template) {
         do {
             let grid = try template.grid()
             loadGrid(grid)
