@@ -42,3 +42,18 @@ public struct ISO8601 {
         return dateFormatter.string(from: date)
     }
 }
+
+extension Date {
+    var iso8601 : String? {
+        return ISO8601.format(self)
+    }
+    init?(iso8601: String) {
+        if let date = ISO8601.parse(iso8601) {
+            self.init(timeIntervalSinceNow: date.timeIntervalSinceNow)
+            return
+        }
+        self.init()
+        return nil
+    }
+}
+

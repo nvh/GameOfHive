@@ -141,21 +141,6 @@ extension HexagonGrid: Sequence {
     }
 }
 
-//extension HexagonGrid: Encodable {
-//    public func encode() -> JSON {
-//        var data: [JSON] = []
-//        
-//        for rowIndex in 0..<rows {
-//            let rowString = self.rowString(index: rowIndex)
-//            data.append(.string(rowString))
-//        }
-//        
-//        let size: JSON = ["rows":rows,"columns":columns]
-//        let grid: JSON = ["data":data,"size":size]
-//        return ["grid":grid]
-//    }
-//}
-
 extension HexagonGrid: Hashable {
     public var hashValue: Int {
         var hashValue: Int = 0
@@ -170,37 +155,6 @@ extension HexagonGrid: Hashable {
 public func == (lhs: HexagonGrid, rhs: HexagonGrid) -> Bool {
     return lhs.hashValue == rhs.hashValue
 }
-
-//extension HexagonGrid: Decodable {
-//    static var curriedInit: (Int) -> (Int) -> (GridType) -> HexagonGrid = { rows in
-//        return { columns in
-//            return { type in
-//                return HexagonGrid(rows: rows, columns: columns, initialGridType: type)
-//            }
-//        }
-//    }
-//    
-//    typealias RowData = String
-//    
-//    public static func decode(_ json: JSON) -> Decoded<HexagonGrid> {
-//        let decodedRows: Decoded<[RowData]> = json <|| ["grid","data"]
-//        let decodedGrid: Decoded<HexagonGrid> = curriedInit <^> json <| ["grid","size","rows"]
-//                                                     <*> json <| ["grid","size","columns"]
-//                                                     <*> pure(.Empty)
-//        return decodedGrid.map { grid in
-//            var newGrid = grid
-//            decodedRows.map { rows in
-//                rows.enumerate().forEach { (rowIndex,row) in
-//                    row.characters.enumerate().forEach { (columnIndex,character) in
-//                        let active = String(character) == "1"
-//                        newGrid = newGrid.setActive(active, atLocation: Coordinate(row: rowIndex, column: columnIndex))
-//                    }
-//                }
-//            }
-//            return newGrid
-//        }
-//    }
-//}
 
 func initialGrid(_ rows: Int, columns: Int, gridType: GridType) -> [Int: HexagonRow] {
     var grid: [Int:HexagonRow] = [:]

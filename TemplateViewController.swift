@@ -18,7 +18,7 @@ class TemplateCell: UICollectionViewCell {
     }
 }
 
-protocol TemplatePickerDelegate: class, SubMenuDelegate  {
+protocol TemplatePickerDelegate: SubMenuDelegate  {
     func didSelectTemplate(template: Template)
 }
 

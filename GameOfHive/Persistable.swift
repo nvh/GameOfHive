@@ -16,37 +16,34 @@ enum LoadError: Error {
 
 protocol Persistable: Saveable , Loadable { }
 
-protocol Saveable {
-    func save(_ path: String) throws
+protocol Saveable: Encodable {
+    func save(_ url: URL) throws
 }
 
-extension Saveable /*where Self:Encodable*/ {
-    func save(_ path: String) throws {
-//        try self.encode().toJSONString.writeToFile(path, atomically: true, encoding: String.Encoding.utf8)
+extension Saveable {
+    func save(_ url: URL) throws {
+        let encoder = JSONEncoder()
+        let data = try encoder.encode(self)
+        try data.write(to: url, options: .atomic)
     }
 }
 
-protocol Loadable {
-    static func load(_ path: String) throws -> Self
+protocol Loadable: Decodable {
+    static func load(_ url: URL) throws -> Self
 }
 
-extension Loadable /*where Self:Decodable*/ {
-    static func load(_ path: String) throws -> Self {
-        throw LoadError.fileDoesNotExist
-//        guard let data = NSData(contentsOfFile: path) else {
-//            throw LoadError.fileDoesNotExist
-//        }
+extension Loadable {
+    static func load(_ url: URL) throws -> Self {
+        guard let data = try? Data(contentsOf: url) else {
+            throw LoadError.fileDoesNotExist
+        }
 
-//        let object = try JSONSerialization.jsonObject(with: data as Data, options: JSONSerialization.ReadingOptions(rawValue: 0))
-//        let json = JSON.parse(object)
-//        let decoded: Decoded<Self.DecodedType> = self.decode(json)
-//
-//        switch decoded {
-//        case .Success(let value):
-//            return value
-//        case .Failure(let error):
-//            throw LoadError.DecodeFailed(error: error)
-//
-//        }
+        let decoder = JSONDecoder()
+        do {
+            let value = try decoder.decode(self.self, from: data)
+            return value
+        } catch let error {
+            throw LoadError.decodeFailed(error: error)
+        }
     }
 }

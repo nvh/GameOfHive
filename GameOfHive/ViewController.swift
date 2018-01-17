@@ -115,7 +115,7 @@ class ViewController: UIViewController {
         messageHUD.layer.addSublayer(borderLayer)
     }
     
-    var undoFileName: String {
+    var undoFileName: URL {
         return documentsDirectory.appendingPathComponent("undo.json")
     }
     
@@ -326,8 +326,16 @@ class ViewController: UIViewController {
     
     fileprivate func clear() {
         stop()
+        var size: CGSize = .zero
+        if (Thread.isMainThread) {
+            size = self.view.bounds.size
+        } else {
+            DispatchQueue.main.sync {
+                size = self.view.bounds.size
+            }
+        }
         gridQueue.async {
-            let grid = gridFromViewDimensions(self.view.bounds.size, cellSize: cellSize, gridType: .empty)
+            let grid = gridFromViewDimensions(size, cellSize: cellSize, gridType: .empty)
             self.grid = grid
             DispatchQueue.main.async {
                 self.drawGrid(grid)

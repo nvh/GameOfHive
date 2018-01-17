@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct Coordinate {
+public struct Coordinate: Codable {
     let row: Int
     let column: Int
     public init(row: Int, column: Int) {
@@ -27,7 +27,7 @@ public func ==(lhs: Coordinate, rhs: Coordinate) -> Bool {
     return lhs.row == rhs.row && lhs.column == rhs.column
 }
 
-public struct Hexagon {
+public struct Hexagon: Codable {
     public let active: Bool
     public let location: Coordinate
     public init(location: Coordinate, active: Bool = false) {

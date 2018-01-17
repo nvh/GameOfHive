@@ -8,12 +8,12 @@
 
 import Foundation
 
-let documentsDirectory: NSString = {
+let documentsDirectory: URL = {
     let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
     let documentsDirectory = paths[0]
-    return documentsDirectory as NSString
+    return URL(fileURLWithPath: documentsDirectory, isDirectory: true)
 }()
 
-let templateDirectory: NSString = documentsDirectory.appendingPathComponent("template") as NSString
-let jsonDirectory: NSString = templateDirectory.appendingPathComponent("json") as NSString
-let imageDirectory: NSString = templateDirectory.appendingPathComponent("images") as NSString
+let templateDirectory: URL = documentsDirectory.appendingPathComponent("template", isDirectory: true)
+let jsonDirectory: URL = templateDirectory.appendingPathComponent("json", isDirectory: true)
+let imageDirectory: URL = templateDirectory.appendingPathComponent("images", isDirectory: true)

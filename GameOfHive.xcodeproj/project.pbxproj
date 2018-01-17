@@ -11,7 +11,6 @@
 		1C366C341B0D3A1B001B2B53 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C366C331B0D3A1B001B2B53 /* UIColor.swift */; };
 		1C3E32EB1CB101F4003739F0 /* EncodingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C3E32EA1CB101F4003739F0 /* EncodingTests.swift */; };
 		1C3E32ED1CB10FED003739F0 /* TemplateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C3E32EC1CB10FED003739F0 /* TemplateManager.swift */; };
-		1C3E32EF1CB13126003739F0 /* NSDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C3E32EE1CB13126003739F0 /* NSDate.swift */; };
 		1C3E32F11CB13163003739F0 /* ISO8601.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C3E32F01CB13163003739F0 /* ISO8601.swift */; };
 		1C3E32F31CB136BD003739F0 /* Persistable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C3E32F21CB136BD003739F0 /* Persistable.swift */; };
 		1C3E32F51CB13AE4003739F0 /* Template.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C3E32F41CB13AE4003739F0 /* Template.swift */; };
@@ -29,10 +28,8 @@
 		B38DD5E91B0CA52D0064E7E4 /* HexagonGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38DD5E81B0CA52D0064E7E4 /* HexagonGrid.swift */; };
 		B38DD5EB1B0CA7A60064E7E4 /* GridTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38DD5EA1B0CA7A60064E7E4 /* GridTests.swift */; };
 		B3938BB11CB003D200C75813 /* Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3938BB01CB003D200C75813 /* Dictionary.swift */; };
-		B3938BB31CB003FE00C75813 /* Argo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3938BB21CB003FE00C75813 /* Argo.swift */; };
 		B3938BB51CB024BC00C75813 /* Foundation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3938BB41CB024BC00C75813 /* Foundation.swift */; };
 		B3938BB71CB04C3B00C75813 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3938BB61CB04C3B00C75813 /* UIView.swift */; };
-		B399C6D11CB0029F002C57A4 /* Encodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B399C6D01CB0029F002C57A4 /* Encodable.swift */; };
 		B3BD1C991B0CD3EF00331176 /* Rules.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BD1C981B0CD3EF00331176 /* Rules.swift */; };
 		C35B19101CB0092D003DF56C /* HiveButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C35B190F1CB0092D003DF56C /* HiveButton.swift */; };
 		C35B19121CB06ACF003DF56C /* Raleway-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C35B19111CB06ACF003DF56C /* Raleway-Medium.ttf */; };
@@ -57,7 +54,6 @@
 		1C366C331B0D3A1B001B2B53 /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		1C3E32EA1CB101F4003739F0 /* EncodingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EncodingTests.swift; sourceTree = "<group>"; };
 		1C3E32EC1CB10FED003739F0 /* TemplateManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TemplateManager.swift; sourceTree = "<group>"; };
-		1C3E32EE1CB13126003739F0 /* NSDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDate.swift; sourceTree = "<group>"; };
 		1C3E32F01CB13163003739F0 /* ISO8601.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ISO8601.swift; sourceTree = "<group>"; };
 		1C3E32F21CB136BD003739F0 /* Persistable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Persistable.swift; sourceTree = "<group>"; };
 		1C3E32F41CB13AE4003739F0 /* Template.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Template.swift; sourceTree = "<group>"; };
@@ -82,10 +78,8 @@
 		B38DD5E81B0CA52D0064E7E4 /* HexagonGrid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HexagonGrid.swift; sourceTree = "<group>"; };
 		B38DD5EA1B0CA7A60064E7E4 /* GridTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridTests.swift; sourceTree = "<group>"; };
 		B3938BB01CB003D200C75813 /* Dictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dictionary.swift; sourceTree = "<group>"; };
-		B3938BB21CB003FE00C75813 /* Argo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Argo.swift; sourceTree = "<group>"; };
 		B3938BB41CB024BC00C75813 /* Foundation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Foundation.swift; sourceTree = "<group>"; };
 		B3938BB61CB04C3B00C75813 /* UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
-		B399C6D01CB0029F002C57A4 /* Encodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Encodable.swift; sourceTree = "<group>"; };
 		B3BD1C981B0CD3EF00331176 /* Rules.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Rules.swift; sourceTree = "<group>"; };
 		C35B190F1CB0092D003DF56C /* HiveButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HiveButton.swift; sourceTree = "<group>"; };
 		C35B19111CB06ACF003DF56C /* Raleway-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Raleway-Medium.ttf"; sourceTree = "<group>"; };
@@ -160,7 +154,6 @@
 				B38DD5E81B0CA52D0064E7E4 /* HexagonGrid.swift */,
 				B3BD1C981B0CD3EF00331176 /* Rules.swift */,
 				1C366C311B0D39BC001B2B53 /* Animations.swift */,
-				B399C6D01CB0029F002C57A4 /* Encodable.swift */,
 			);
 			path = GameOfHive;
 			sourceTree = "<group>";
@@ -208,10 +201,8 @@
 			isa = PBXGroup;
 			children = (
 				B3938BB01CB003D200C75813 /* Dictionary.swift */,
-				B3938BB21CB003FE00C75813 /* Argo.swift */,
 				B3938BB41CB024BC00C75813 /* Foundation.swift */,
 				B3938BB61CB04C3B00C75813 /* UIView.swift */,
-				1C3E32EE1CB13126003739F0 /* NSDate.swift */,
 				1C3E32F01CB13163003739F0 /* ISO8601.swift */,
 			);
 			name = Extensions;
@@ -456,7 +447,6 @@
 			files = (
 				B38DD5E91B0CA52D0064E7E4 /* HexagonGrid.swift in Sources */,
 				C35B19141CB13E5A003DF56C /* ContentController.swift in Sources */,
-				B399C6D11CB0029F002C57A4 /* Encodable.swift in Sources */,
 				1CE6204B1B0C8E350072BBF9 /* ViewController.swift in Sources */,
 				1C3E32F71CB14CEF003739F0 /* TemplateDataSource.swift in Sources */,
 				C35B19161CB16862003DF56C /* TemplateContainerController.swift in Sources */,
@@ -473,9 +463,7 @@
 				B38DD5E71B0C9BB30064E7E4 /* Hexagon.swift in Sources */,
 				B3938BB71CB04C3B00C75813 /* UIView.swift in Sources */,
 				1C3E32F91CB152C0003739F0 /* TemplateViewController.swift in Sources */,
-				B3938BB31CB003FE00C75813 /* Argo.swift in Sources */,
 				1C3E32F11CB13163003739F0 /* ISO8601.swift in Sources */,
-				1C3E32EF1CB13126003739F0 /* NSDate.swift in Sources */,
 				1C366C321B0D39BC001B2B53 /* Animations.swift in Sources */,
 				B3938BB51CB024BC00C75813 /* Foundation.swift in Sources */,
 			);

@@ -15,49 +15,50 @@ struct Template: Persistable {
     let identifier: String
     let title: String
     let date: Date
-    let gridPath: String
-    let imagePath: String
+    let gridURL: URL
+    let imageURL: URL
     
     var image: UIImage? {
-        return UIImage(contentsOfFile: imagePath)
+        return UIImage(contentsOfFile: imageURL.path)
     }
     
     func grid() throws -> HexagonGrid  {
-        return try HexagonGrid.load(gridPath)
+        return try HexagonGrid.load(gridURL)
+    }
+
+    init(identifier: String, title: String, date: Date, gridURL: URL, imageURL: URL) {
+        self.identifier = identifier
+        self.title = title
+        self.date = date
+        self.gridURL = gridURL
+        self.imageURL = imageURL
+    }
+
+    enum CodingKeys: String, CodingKey {
+        case identifier
+        case title
+        case date
+        case gridPath
+        case imagePath
+    }
+
+    init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        identifier = try values.decode(String.self, forKey: .identifier)
+        title = try values.decode(String.self, forKey: .title)
+        date = try values.decode(Date.self, forKey: .date)
+        let gridPath = try values.decode(String.self, forKey: .gridPath)
+        let imagePath = try values.decode(String.self, forKey: .imagePath)
+        gridURL = URL(fileURLWithPath: gridPath, relativeTo: jsonDirectory)
+        imageURL = URL(fileURLWithPath: imagePath, relativeTo: imageDirectory)
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(identifier, forKey: .identifier)
+        try container.encode(title, forKey: .title)
+        try container.encode(date, forKey: .date)
+        try container.encode(gridURL.relativePath, forKey: .gridPath)
+        try container.encode(imageURL.relativePath, forKey: .imagePath)
     }
 }
-
-//extension Template: Decodable {
-//    static var curriedInit: (String) -> (String) -> (Date) -> (String) -> (String) -> Template = { identifier in
-//        return { title in
-//            return { date in
-//                return { gridPath in
-//                    return { imagePath in
-//                        return Template(
-//                            identifier: identifier,
-//                            title: title,
-//                            date: date,
-//                            gridPath: gridPath,
-//                            imagePath: imagePath)
-//                    }
-//                }
-//            }
-//        }
-//    }
-//    
-//    static func decode(_ json: JSON) -> Decoded<Template> {
-//        return curriedInit  <^> json <| "identifier"
-//            <*> json <| "title"
-//            <*> json <| "date"
-//            <*> (json <| "gridPath").map(documentsDirectory.stringByAppendingPathComponent)
-//            <*> (json <| "imagePath").map(documentsDirectory.stringByAppendingPathComponent)
-//    }
-//}
-//
-//extension Template: Encodable {
-//    func encode() -> JSON {
-//        let relativeGridPath = gridPath.replacingOccurrences(of: documentsDirectory as String, with: "")
-//        let relativeImagePath = imagePath.replacingOccurrences(of: documentsDirectory as String, with: "")        
-//        return ["identifier":identifier, "title":title, "date":date, "gridPath":relativeGridPath, "imagePath":relativeImagePath]
-//    }
-//}
