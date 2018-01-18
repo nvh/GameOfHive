@@ -41,6 +41,7 @@ class ContentViewController: UIViewController, WKNavigationDelegate {
             self.webViewContainer.alpha = 1.0
         }) 
 
+        webView.layer.backgroundColor = UIColor.backgroundColor.cgColor
         webView.layer.borderColor = UIColor.darkAmberColor.cgColor
         webView.layer.borderWidth = 1
     }
