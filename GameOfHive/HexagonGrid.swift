@@ -40,10 +40,10 @@ public struct HexagonGrid: Persistable {
     
     func wrap(_ value: Int, max: Int) -> Int {
         if value < 0 {
-            return value + max
+            return value + max - 1
         }
         if max <= value {
-            return value - max
+            return value - max + 1
         }
         return value
     }
