@@ -12,7 +12,7 @@ class HiveDataSource {
     var hives: [Hive] = []
    
     func refresh() {
-        self.hives = HiveManager.shared.allHives()
+        self.hives = HiveManager.sharedSaved.allHives()
     }
     
     var numberOfSections: Int {

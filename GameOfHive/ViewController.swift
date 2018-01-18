@@ -139,7 +139,7 @@ class ViewController: UIViewController {
     func saveHive() {
         do {
             let image = contentView.captureScreenshot(scale: 0.5)
-            try HiveManager.shared.save(grid: grid, image: image)
+            try HiveManager.sharedSaved.save(grid: grid, image: image)
 
         } catch let error {
             print("Error saving grid",error)
@@ -148,7 +148,7 @@ class ViewController: UIViewController {
     
     func loadHive(with identifier: String? = nil) {
         do {
-            let hive = try HiveManager.shared.loadHive(identifier)
+            let hive = try HiveManager.sharedSaved.loadHive(identifier)
             load(hive: hive)
         } catch {
             print("error loading hive", error)

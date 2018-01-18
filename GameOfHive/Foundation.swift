@@ -13,7 +13,3 @@ let documentsDirectory: URL = {
     let documentsDirectory = paths[0]
     return URL(fileURLWithPath: documentsDirectory, isDirectory: true)
 }()
-
-let templateDirectory: URL = documentsDirectory.appendingPathComponent("template", isDirectory: true)
-let jsonDirectory: URL = templateDirectory.appendingPathComponent("json", isDirectory: true)
-let imageDirectory: URL = templateDirectory.appendingPathComponent("images", isDirectory: true)
