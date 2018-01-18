@@ -36,23 +36,24 @@ class MenuController: UIViewController {
 
     fileprivate let buttonModels = [
         MenuItemModel(
+            title: "Video",
+            content: .webpage(URL(string: "https://nvh.github.io/GameOfHive/video.html")!)),
+        MenuItemModel(
+            title: "Help Bees",
+            content: .webpage(URL(string: "https://nvh.github.io/GameOfHive/donate.html")!)),
+        MenuItemModel(
             title: "About",
-            content: .webpage(URL(string: "https://tomasharkema.github.io/GameOfHive/about.html")!)),
-        MenuItemModel(
-            title: "Credits",
-            content: .webpage(URL(string: "https://tomasharkema.github.io/GameOfHive/credits.html")!)),
-        MenuItemModel(
-            title: "Templates",
-            content: .templatePicker),
+            content: .webpage(URL(string: "https://nvh.github.io/GameOfHive/about.html")!)),
         MenuItemModel(
             title: "Saved Hives",
-            content: .webpage(URL(string: "https://tomasharkema.github.io/GameOfHive/")!)),
+            content: .templatePicker),
         MenuItemModel(
-            title: "Donate",
-            content: .webpage(URL(string: "https://tomasharkema.github.io/GameOfHive/donate.html")!)),
+            title: "Template Hives",
+            content: .templatePicker),
         MenuItemModel(
-            title: "Video",
-            content: .webpage(URL(string: "https://tomasharkema.github.io/GameOfHive/video.html")!)),]
+            title: "Learn",
+            content: .webpage(URL(string: "https://nvh.github.io/GameOfHive/learn.html")!)),
+]
 
 
     fileprivate var buttons = [HiveButton]()
