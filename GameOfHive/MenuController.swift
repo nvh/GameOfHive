@@ -15,12 +15,12 @@ enum MenuPressedState {
 
 protocol MenuDelegate: class {
     func menuDidClose(menu: MenuController)
-    func load(template: Template)
+    func load(hive: Hive)
 }
 
 enum Content {
     case webpage(URL)
-    case templatePicker
+    case hivePicker
 }
 
 struct MenuItemModel {
@@ -46,10 +46,10 @@ class MenuController: UIViewController {
             content: .webpage(URL(string: "https://nvh.github.io/GameOfHive/about.html")!)),
         MenuItemModel(
             title: "Saved Hives",
-            content: .templatePicker),
+            content: .hivePicker),
         MenuItemModel(
             title: "Template Hives",
-            content: .templatePicker),
+            content: .hivePicker),
         MenuItemModel(
             title: "Learn",
             content: .webpage(URL(string: "https://nvh.github.io/GameOfHive/learn.html")!)),
@@ -228,9 +228,9 @@ extension MenuController: SubMenuDelegate {
     }
 }
 
-extension MenuController: TemplatePickerDelegate {
-    func didSelectTemplate(template: Template) {
-        delegate?.load(template: template)
+extension MenuController: HivePickerDelegate {
+    func didSelectHive(hive: Hive) {
+        delegate?.load(hive: hive)
         animateOut()
     }
 }
@@ -260,8 +260,8 @@ extension MenuController {
         case .webpage:
             performSegue(withIdentifier: "presentContentController", sender: self)
             animateButtonToControllerPoint(hiveButton: hiveButton) { _ in }
-        case .templatePicker:
-            performSegue(withIdentifier: "openTemplatePicker", sender: self)
+        case .hivePicker:
+            performSegue(withIdentifier: "openHivePicker", sender: self)
             animateButtonToControllerPoint(hiveButton: hiveButton) { _ in }
         }
     }
@@ -279,12 +279,12 @@ extension MenuController {
             destination.leftOffset = hexagonWidthForHeight(height/2)
             destination.webView.load(URLRequest(url: url))
             destination.delegate = self
-        case .templatePicker:
-            guard let destination = segue.destination as? TemplateContainerController, segue.identifier == "openTemplatePicker" else {
+        case .hivePicker:
+            guard let destination = segue.destination as? HivePickerContainerController, segue.identifier == "openHivePicker" else {
                 return
             }
-            destination.templateDelegate = self
-            print("preparing for template picker segue")
+            destination.hivePickerDelegate = self
+            print("preparing for hive picker segue")
         }
   }
 

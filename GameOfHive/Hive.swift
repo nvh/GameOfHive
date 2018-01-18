@@ -1,5 +1,5 @@
 //
-//  Template.swift
+//  Hive.swift
 //  GameOfHive
 //
 //  Created by Taco Vollmer on 03/04/16.
@@ -11,7 +11,7 @@ import UIKit
 
 
 
-struct Template: Persistable {
+struct Hive: Persistable {
     let identifier: String
     let title: String
     let date: Date

@@ -1,5 +1,5 @@
 //
-//  TemplateContainerController.swift
+//  HivePickerContainerController.swift
 //  GameOfHive
 //
 //  Created by Tomas Harkema on 03-04-16.
@@ -8,11 +8,11 @@
 
 import UIKit
 
-class TemplateContainerController: UIViewController {
+class HivePickerContainerController: UIViewController {
     @IBOutlet weak var leftOffsetConstraint: NSLayoutConstraint!
 
     
-    weak var templateDelegate: TemplatePickerDelegate?
+    weak var hivePickerDelegate: HivePickerDelegate?
     var leftOffset: CGFloat = 120
     
     override var prefersStatusBarHidden: Bool {
@@ -20,7 +20,7 @@ class TemplateContainerController: UIViewController {
     }
 
     @IBAction func dismissButtonPressed(_ sender: UIButton) {
-        templateDelegate?.contentWillClose(openedViewController: self)
+        hivePickerDelegate?.contentWillClose(openedViewController: self)
         dismiss(animated: true, completion: nil)
     }
     
@@ -31,10 +31,10 @@ class TemplateContainerController: UIViewController {
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let destination = segue.destination as? TemplateViewController, segue.identifier == "embedTemplates" else {
+        guard let destination = segue.destination as? HivePickerViewController, segue.identifier == "hivePicker" else {
             return
         }
 
-        destination.delegate = templateDelegate
+        destination.delegate = hivePickerDelegate
     }
 }

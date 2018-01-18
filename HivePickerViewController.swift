@@ -1,5 +1,5 @@
 //
-//  TemplateViewController.swift
+//  HivePickerViewController.swift
 //  GameOfHive
 //
 //  Created by Taco Vollmer on 03/04/16.
@@ -8,8 +8,8 @@
 
 import UIKit
 
-class TemplateCell: UICollectionViewCell {
-    static let reuseIdentifier = "TemplateCell"
+class HivePickerCell: UICollectionViewCell {
+    static let reuseIdentifier = "HivePickerCell"
     @IBOutlet weak var imageView: UIImageView?
     @IBOutlet weak var dateLabel: UILabel?
     
@@ -18,14 +18,14 @@ class TemplateCell: UICollectionViewCell {
     }
 }
 
-protocol TemplatePickerDelegate: SubMenuDelegate  {
-    func didSelectTemplate(template: Template)
+protocol HivePickerDelegate: SubMenuDelegate  {
+    func didSelectHive(hive: Hive)
 }
 
-class TemplateViewController: UICollectionViewController {
+class HivePickerViewController: UICollectionViewController {
     
-    let dataSource = TemplateDataSource()
-    weak var delegate: TemplatePickerDelegate?
+    let dataSource = HiveDataSource()
+    weak var delegate: HivePickerDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -44,29 +44,29 @@ class TemplateViewController: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print(dataSource.numberOfTemplates(inSection: section))
-        return dataSource.numberOfTemplates(inSection: section)
+        print(dataSource.numberOfHives(inSection: section))
+        return dataSource.numberOfHives(inSection: section)
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TemplateCell.reuseIdentifier, for: indexPath as IndexPath) as? TemplateCell,
-            let template = dataSource.template(atIndexPath: indexPath) else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HivePickerCell.reuseIdentifier, for: indexPath as IndexPath) as? HivePickerCell,
+            let hive = dataSource.hive(atIndexPath: indexPath) else {
                 return UICollectionViewCell()
         }
         
-        cell.imageView?.image = template.image
+        cell.imageView?.image = hive.image
         let dateFormat = DateFormatter.init()
         dateFormat.dateStyle = DateFormatter.Style.short
         dateFormat.timeStyle = DateFormatter.Style.medium
-        cell.dateLabel?.text = dateFormat.string(from: template.date)
+        cell.dateLabel?.text = dateFormat.string(from: hive.date)
         return cell
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt  indexPath: IndexPath) {
-        guard let template = dataSource.template(atIndexPath: indexPath) else {
+        guard let hive = dataSource.hive(atIndexPath: indexPath) else {
             return
         }
-        delegate?.didSelectTemplate(template: template)
+        delegate?.didSelectHive(hive: hive)
         dismiss(animated: true, completion: nil)
     }
 }

@@ -136,22 +136,22 @@ class ViewController: UIViewController {
         }
     }
     
-    func saveTemplate() {
+    func saveHive() {
         do {
             let image = contentView.captureScreenshot(scale: 0.5)
-            try TemplateManager.shared.saveTemplate(grid: grid, image: image)
+            try HiveManager.shared.save(grid: grid, image: image)
 
         } catch let error {
             print("Error saving grid",error)
         }
     }
     
-    func loadTemplate(with identifier: String? = nil) {
+    func loadHive(with identifier: String? = nil) {
         do {
-            let template = try TemplateManager.shared.loadTemplate(identifier)
-            load(template: template)
+            let hive = try HiveManager.shared.loadHive(identifier)
+            load(hive: hive)
         } catch {
-            print("error loading template", error)
+            print("error loading hive", error)
         }
     }
     
@@ -169,12 +169,12 @@ class ViewController: UIViewController {
         menu.delegate = self
     }
     
-    func load(template: Template) {
+    func load(hive: Hive) {
         do {
-            let grid = try template.grid()
+            let grid = try hive.grid()
             loadGrid(grid)
         } catch {
-            print("error loading template",error)
+            print("error loading hive",error)
         }
     }
     
@@ -415,11 +415,11 @@ extension ViewController {
     }
     
     @IBAction func didTapLoad(_ sender: UIButton) {
-        loadTemplate()
+        loadHive()
     }
     
     @IBAction func didTapSave(_ sender: UIButton) {
-        saveTemplate()
+        saveHive()
     }
     
     @IBAction func didTapMenu(_ sender: UIButton) {
