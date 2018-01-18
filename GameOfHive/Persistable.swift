@@ -33,12 +33,16 @@ protocol Loadable: Decodable {
 }
 
 extension Loadable {
+    static var urlKey: CodingUserInfoKey {
+        return CodingUserInfoKey(rawValue: "Loadable.URL")!
+    }
     static func load(_ url: URL) throws -> Self {
         guard let data = try? Data(contentsOf: url) else {
             throw LoadError.fileDoesNotExist
         }
 
         let decoder = JSONDecoder()
+        decoder.userInfo[urlKey] = url
         do {
             let value = try decoder.decode(self.self, from: data)
             return value

@@ -49,8 +49,10 @@ struct Hive: Persistable {
         date = try values.decode(Date.self, forKey: .date)
         let gridPath = try values.decode(String.self, forKey: .gridPath)
         let imagePath = try values.decode(String.self, forKey: .imagePath)
-        gridURL = URL(fileURLWithPath: gridPath, relativeTo: HiveManager.sharedSaved.jsonDirectory)
-        imageURL = URL(fileURLWithPath: imagePath, relativeTo: HiveManager.sharedSaved.imageDirectory)
+        let url = decoder.userInfo[Hive.urlKey] as! URL
+        let directory = url.deletingLastPathComponent()
+        gridURL = URL(fileURLWithPath: gridPath, relativeTo: directory)
+        imageURL = URL(fileURLWithPath: imagePath, relativeTo: directory)
     }
 
     func encode(to encoder: Encoder) throws {
