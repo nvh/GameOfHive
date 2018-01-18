@@ -14,6 +14,7 @@ typealias HexagonRow = [Int: Hexagon]
 public enum GridType {
   case empty
   case random
+  case template(HexagonGrid)
 }
 
 public struct HexagonGrid: Persistable {
@@ -161,7 +162,13 @@ func initialGrid(_ rows: Int, columns: Int, gridType: GridType) -> [Int: Hexagon
     for r in 0..<rows {
         var row: HexagonRow = [:]
         for c in 0..<columns {
-            let active = gridType == .empty ? false : arc4random_uniform(10) == 1
+            let active: Bool
+            switch gridType {
+            case .empty: active = false
+            case .random: active = arc4random_uniform(10) == 1
+            case .template(let template):
+                active = template.grid[r]?[c]?.active ?? false
+            }
             row[c] = Hexagon(row: r, column: c, active: active)
         }
         grid[r] = row
