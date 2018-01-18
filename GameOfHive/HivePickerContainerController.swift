@@ -13,6 +13,7 @@ class HivePickerContainerController: UIViewController {
 
     
     weak var hivePickerDelegate: HivePickerDelegate?
+    var hiveManager: HiveManager!
     var leftOffset: CGFloat = 120
     
     override var prefersStatusBarHidden: Bool {
@@ -34,7 +35,7 @@ class HivePickerContainerController: UIViewController {
         guard let destination = segue.destination as? HivePickerViewController, segue.identifier == "hivePicker" else {
             return
         }
-
+        destination.dataSource = HiveDataSource(manager: hiveManager)
         destination.delegate = hivePickerDelegate
     }
 }

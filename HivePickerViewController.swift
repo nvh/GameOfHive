@@ -24,15 +24,19 @@ protocol HivePickerDelegate: SubMenuDelegate  {
 
 class HivePickerViewController: UICollectionViewController {
     
-    let dataSource = HiveDataSource()
+    var dataSource: HiveDataSource!
     weak var delegate: HivePickerDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        dataSource.refresh()
         collectionView!.backgroundColor = UIColor.backgroundColor
         collectionView!.layer.borderColor = UIColor.darkAmberColor.cgColor
         collectionView!.layer.borderWidth = 1
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        dataSource.refresh()
     }
     
     override var prefersStatusBarHidden: Bool {
@@ -58,7 +62,7 @@ class HivePickerViewController: UICollectionViewController {
         let dateFormat = DateFormatter.init()
         dateFormat.dateStyle = DateFormatter.Style.short
         dateFormat.timeStyle = DateFormatter.Style.medium
-        cell.dateLabel?.text = dateFormat.string(from: hive.date)
+        cell.dateLabel?.text = hive.title
         return cell
     }
     

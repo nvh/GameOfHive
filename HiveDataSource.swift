@@ -9,10 +9,16 @@
 import Foundation
 
 class HiveDataSource {
+    let manager: HiveManager
+
+    init(manager: HiveManager) {
+        self.manager = manager
+    }
+
     var hives: [Hive] = []
    
     func refresh() {
-        self.hives = HiveManager.sharedSaved.allHives()
+        self.hives = manager.allHives()
     }
     
     var numberOfSections: Int {

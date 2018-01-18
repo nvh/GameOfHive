@@ -20,7 +20,8 @@ protocol MenuDelegate: class {
 
 enum Content {
     case webpage(URL)
-    case hivePicker
+    case savedHives
+    case templateHives
 }
 
 struct MenuItemModel {
@@ -46,10 +47,10 @@ class MenuController: UIViewController {
             content: .webpage(URL(string: "https://nvh.github.io/GameOfHive/about.html")!)),
         MenuItemModel(
             title: "Saved Hives",
-            content: .hivePicker),
+            content: .savedHives),
         MenuItemModel(
             title: "Template Hives",
-            content: .hivePicker),
+            content: .templateHives),
         MenuItemModel(
             title: "Learn",
             content: .webpage(URL(string: "https://nvh.github.io/GameOfHive/learn.html")!)),
@@ -260,7 +261,7 @@ extension MenuController {
         case .webpage:
             performSegue(withIdentifier: "presentContentController", sender: self)
             animateButtonToControllerPoint(hiveButton: hiveButton) { _ in }
-        case .hivePicker:
+        case .savedHives, .templateHives:
             performSegue(withIdentifier: "openHivePicker", sender: self)
             animateButtonToControllerPoint(hiveButton: hiveButton) { _ in }
         }
@@ -279,9 +280,14 @@ extension MenuController {
             destination.leftOffset = hexagonWidthForHeight(height/2)
             destination.webView.load(URLRequest(url: url))
             destination.delegate = self
-        case .hivePicker:
+        case .savedHives, .templateHives:
             guard let destination = segue.destination as? HivePickerContainerController, segue.identifier == "openHivePicker" else {
                 return
+            }
+            if case .savedHives = item.content {
+                destination.hiveManager = HiveManager.sharedSaved
+            } else if case .templateHives = item.content {
+                destination.hiveManager = HiveManager(directory: Bundle.main.url(forResource: "templates", withExtension: nil)!)
             }
             destination.hivePickerDelegate = self
             print("preparing for hive picker segue")
