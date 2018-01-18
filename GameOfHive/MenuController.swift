@@ -39,7 +39,7 @@ class MenuController: UIViewController {
             title: "Video",
             content: .webpage(URL(string: "https://nvh.github.io/GameOfHive/video.html")!)),
         MenuItemModel(
-            title: "Help Bees",
+            title: "Help  Bees",
             content: .webpage(URL(string: "https://nvh.github.io/GameOfHive/donate.html")!)),
         MenuItemModel(
             title: "About",
