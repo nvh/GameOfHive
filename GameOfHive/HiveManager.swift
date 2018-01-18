@@ -13,6 +13,9 @@ private let savedHivesDirectory: URL = documentsDirectory.appendingPathComponent
 
 private let lastSavedHiveIdentifierKey = "org.gameofhive.lastSavedHiveIdentifier"
 
+private let jsonPath = "json"
+private let imagesPath = "images"
+
 private var lastSavedHiveIdentifier: String {
     return UserDefaults.standard.object(forKey: lastSavedHiveIdentifierKey)! as! String
 }
@@ -25,13 +28,11 @@ class HiveManager {
     static let sharedSaved = HiveManager(directory: savedHivesDirectory)
     private let fileManager = FileManager.default
     private let directory: URL
-    let jsonDirectory: URL
-    let imageDirectory: URL
 
     init(directory: URL) {
         self.directory = directory
-        self.jsonDirectory = directory.appendingPathComponent("json", isDirectory: true)
-        self.imageDirectory = directory.appendingPathComponent("images", isDirectory: true)
+        let jsonDirectory = directory.appendingPathComponent(jsonPath, isDirectory: true)
+        let imageDirectory = directory.appendingPathComponent(imagesPath, isDirectory: true)
         createDirectory(at: jsonDirectory)
         createDirectory(at: imageDirectory)
     }
@@ -60,17 +61,16 @@ class HiveManager {
         let date = Date()
         let title = title ?? date.iso8601 ?? identifier
         
-        let imageFileName = "\(identifier).png"
-        let imagePath = URL(fileURLWithPath: imageFileName, relativeTo: imageDirectory)
+        let imagePath = URL(fileURLWithPath: "\(imagesPath)/\(identifier).png", relativeTo: directory)
         guard let imageData = UIImagePNGRepresentation(image), ((try? imageData.write(to: imagePath, options: [.atomic])) != nil) else {
             throw HiveError.imageFailedSaving
         }
         
-        let gridFileName = "\(identifier).json"
-        let gridURL = URL(fileURLWithPath: gridFileName, relativeTo: jsonDirectory)
+        let gridFileName = "\(jsonPath)/\(identifier).json"
+        let gridURL = URL(fileURLWithPath: gridFileName, relativeTo: directory)
         try grid.save(gridURL)
         
-        let hiveFileName = gridFileName
+        let hiveFileName = "\(identifier).json"
         let hiveURL = URL(fileURLWithPath: hiveFileName, relativeTo: directory)
         let hive = Hive(identifier: identifier, title: title, date: date, gridURL: gridURL, imageURL: imagePath)
         try hive.save(hiveURL)
