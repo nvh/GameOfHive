@@ -157,7 +157,7 @@ class ViewController: UIViewController {
     
     func loadGrid(_ grid: HexagonGrid) {
         stop()
-        self.grid = grid
+        self.grid = gridFromViewDimensions(view.bounds.size, cellSize: cellSize, gridType: .template(grid))
         drawGrid(self.grid, animationDuration: 0.1)
     }
     
