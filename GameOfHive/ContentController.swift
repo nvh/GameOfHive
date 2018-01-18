@@ -10,7 +10,7 @@ import UIKit
 import WebKit
 
 
-class ContentViewController: UIViewController {
+class ContentViewController: UIViewController, WKNavigationDelegate {
     @IBOutlet weak var webViewContainer: UIView!
     @IBOutlet fileprivate weak var leftOffsetConstraint: NSLayoutConstraint!
     var leftOffset: CGFloat = 120
@@ -25,6 +25,7 @@ class ContentViewController: UIViewController {
         webView.backgroundColor = .white
         webView.scrollView.backgroundColor = UIColor.backgroundColor
         webView.isOpaque = false
+        webView.navigationDelegate = self
         webViewContainer.addSubview(webView)
         webView.constrainToView(webViewContainer, margin: 0)
     }
@@ -55,5 +56,14 @@ class ContentViewController: UIViewController {
 
     override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
         return [.landscapeLeft,.landscapeRight]
+    }
+
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        if navigationAction.navigationType == .linkActivated, let url = navigationAction.request.url, url.host != "nvh.github.io" {
+            decisionHandler(.cancel)
+            UIApplication.shared.openURL(url)
+        } else {
+            decisionHandler(.allow)
+        }
     }
 }
