@@ -16,13 +16,14 @@ private let lastSavedHiveIdentifierKey = "org.gameofhive.lastSavedHiveIdentifier
 private let jsonPath = "json"
 private let imagesPath = "images"
 
-private var lastSavedHiveIdentifier: String {
-    return UserDefaults.standard.object(forKey: lastSavedHiveIdentifierKey)! as! String
+private var lastSavedHiveIdentifier: String? {
+    return UserDefaults.standard.object(forKey: lastSavedHiveIdentifierKey) as? String
 }
 
 class HiveManager {
     enum HiveError: Error {
         case imageFailedSaving
+        case hiveNotFound
     }
     
     static let sharedSaved = HiveManager(directory: savedHivesDirectory)
@@ -50,7 +51,9 @@ class HiveManager {
     }
     
     func loadHive(_ identifier: String? = nil) throws -> Hive {
-        let hiveIdentifier = identifier ?? lastSavedHiveIdentifier
+        guard let hiveIdentifier = identifier ?? lastSavedHiveIdentifier else {
+            throw HiveError.hiveNotFound
+        }
         let hiveFileName = "\(hiveIdentifier).json"
         let hiveURL = URL(fileURLWithPath: hiveFileName, relativeTo: directory)
         return try Hive.load(hiveURL)
