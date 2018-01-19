@@ -350,7 +350,14 @@ class ViewController: UIViewController {
         cellView.alive = true
         userDidUpateCell(cellView)
     }
+    
+    override func prefersHomeIndicatorAutoHidden() -> Bool {
+        return true
+    }
 
+    override func preferredScreenEdgesDeferringSystemGestures() -> UIRectEdge {
+        return .bottom
+    }
 }
 
 // MARK: HexagonView Delegate
