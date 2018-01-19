@@ -83,7 +83,12 @@ class ViewController: UIViewController {
         messageHUD.translatesAutoresizingMaskIntoConstraints = false
         messageHUD.centerXAnchor.constraint(equalTo: messageOverlay.centerXAnchor).isActive = true
         messageHUD.centerYAnchor.constraint(equalTo: messageOverlay.centerYAnchor).isActive = true
-        messageHUD.heightAnchor.constraint(equalTo: messageOverlay.heightAnchor, multiplier: 0.5).isActive = true
+        let halfHeight = messageHUD.heightAnchor.constraint(equalTo: messageOverlay.heightAnchor, multiplier: 0.5)
+        halfHeight.priority = .defaultHigh
+        halfHeight.isActive = true
+        let minHeight = messageHUD.heightAnchor.constraint(greaterThanOrEqualToConstant: 250)
+        minHeight.priority = .required
+        minHeight.isActive = true
         messageHUD.heightAnchor.constraint(equalTo: messageHUD.widthAnchor, multiplier: 1/(sqrt(3) / 2)).isActive = true
 
         let messageView = UILabel()
